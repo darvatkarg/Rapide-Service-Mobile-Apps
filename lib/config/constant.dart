@@ -1,0 +1,9 @@
+const String appName = 'Rapide Service Driver';
+const String packageName = 'YOUR_APP_PACKAGE_NAME';
+// const String domainBaseUrl = 'YOUR_DOMAIN_BASE_URL';
+// const String domainBaseUrl = 'https://hyperlocal.syphor.in';
+const String domainBaseUrl = 'https://rapideservice.neroon.one';
+// const String baseUrl = '$domainBaseUrl/api/delivery-boy/';
+const String baseUrl = '$domainBaseUrl/api/delivery-boy/';
+const String deliveryZoneUrl = '$domainBaseUrl/api/';
+const String defaultTheme = 'light';
