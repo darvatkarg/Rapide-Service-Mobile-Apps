@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "67766608479",
+    "firebase_url": "https://hyperlocal-34cd6-default-rtdb.firebaseio.com",
+    "project_id": "hyperlocal-34cd6",
+    "storage_bucket": "hyperlocal-34cd6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67766608479:android:a89741e6f0963c0d79b1ea",
+        "android_client_info": {
+          "package_name": "com.hyperLocal.customer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAy1zKlHzSRo-vCn2Y-SrIiSSXwYYGcXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67766608479:android:861f01ec56d537f979b1ea",
+        "android_client_info": {
+          "package_name": "com.hyperlocal.partner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAy1zKlHzSRo-vCn2Y-SrIiSSXwYYGcXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
