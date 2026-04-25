@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hyper_local/config/distance_calculator.dart';
 import 'package:hyper_local/config/global.dart';
 import 'package:hyper_local/config/securestorage_helper.dart';
+import 'package:hyper_local/config/theme.dart';
 import 'package:hyper_local/l10n/app_localizations.dart';
 import 'package:hyper_local/router/app_routes.dart';
 
@@ -133,6 +134,7 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
 
   Future<void> addParcelApi() async {
     print("Selected Address ID: $selectedAddressId");
+    String finalPaymentMethod = payer == "Receiver" ? "Cash" : paymentMethod;
     if (await checkUserLoggedIn()) {
       if (mounted) {
         context.read<ParcelCreateBloc>().add(
@@ -149,7 +151,7 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
                 rcFloor: _floorController.text,
                 pbStatus: "pending",
                 pbWhoPay: payer,
-                pbPayMethod: paymentMethod,
+                pbPayMethod: finalPaymentMethod,
                 pbDeliveryCharge: totalDeliveryCharge.toInt(),
               ),
             );
@@ -202,22 +204,26 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
                   ),
                   Row(
                     children: [
-                      Text( 
+                      Text(
                         "FCFA",
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppTheme.primaryColor,
+                                ),
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Text(
                         totalDeliveryCharge.toStringAsFixed(0),
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppTheme.primaryColor,
+                                ),
                       ),
                     ],
                   )
@@ -229,7 +235,7 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
                 height: 55,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1A73E8),
+                    backgroundColor: AppTheme.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -263,12 +269,13 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
 
               if (state.isAdded) {
                 Navigator.pop(context);
-                ToastManager.show(
-                    context: context,
-                    message: state.message,
-                    type: ToastType.success);
+                // ToastManager.show(
+                //     context: context,
+                //     message: state.message,
+                //     type: ToastType.success);
 
-                GoRouter.of(context).push(AppRoutes.parcelSuccess);
+                // GoRouter.of(context).push(AppRoutes.parcelSuccess);
+                GoRouter.of(context).go(AppRoutes.parcelSuccess);
               }
 
               if (!state.isAdded &&
@@ -316,19 +323,20 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                _radioCard(
-                  title: l10n?.paymentMethod ?? "Payment Method",
-                  groupValue: paymentMethod,
-                  options: {
-                    "Online": l10n?.online ?? "Online",
-                    "Cash": l10n?.cash ?? "Cash",
-                  },
-                  onChanged: (val) {
-                    setState(() {
-                      paymentMethod = val!;
-                    });
-                  },
-                ),
+                if (payer == "Sender")
+                  _radioCard(
+                    title: l10n?.paymentMethod ?? "Payment Method",
+                    groupValue: paymentMethod,
+                    options: {
+                      "Online": l10n?.online ?? "Online",
+                      "Cash": l10n?.cash ?? "Cash",
+                    },
+                    onChanged: (val) {
+                      setState(() {
+                        paymentMethod = val!;
+                      });
+                    },
+                  ),
                 const SizedBox(height: 16),
               ],
             ),
@@ -364,7 +372,7 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
               children: [
                 const Icon(
                   Icons.person,
-                  color: Colors.blue,
+                  color: AppTheme.primaryColor,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -379,7 +387,7 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
               children: [
                 const Icon(
                   Icons.phone,
-                  color: Colors.blue,
+                  color: AppTheme.primaryColor,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -433,7 +441,7 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
                   children: [
                     Icon(
                       Icons.my_location,
-                      color: Colors.blue,
+                      color: AppTheme.primaryColor,
                       size: 20,
                     ),
                     SizedBox(width: 10),
@@ -453,7 +461,7 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
                   children: [
                     Icon(
                       Icons.location_on,
-                      color: Colors.blue,
+                      color: AppTheme.primaryColor,
                       size: 20,
                     ),
                     SizedBox(width: 10),
@@ -505,7 +513,7 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
                       Radio<String>(
                         value: entry.key,
                         groupValue: groupValue,
-                        activeColor: Colors.blue,
+                        activeColor: AppTheme.primaryColor,
                         onChanged: onChanged,
                       ),
                       Text(entry.value),

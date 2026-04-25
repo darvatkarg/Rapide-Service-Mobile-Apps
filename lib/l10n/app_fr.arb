@@ -126,6 +126,9 @@
       }
     }
   },
+  "runningOrders": "En cours",
+  "historyOrders": "Historique",
+  "receiverPhoneNumber": "Numéro de téléphone du destinataire",
   "myAddresses": "Mes adresses",
   "addAddress": "Ajouter une adresse",
   "deleteAddress": "Supprimer l'adresse",
@@ -368,6 +371,8 @@
   "typeItemName": "Tapez le nom de l'article...",
   "pleaseAdd1ItemInShoppingList": "Veuillez ajouter au moins 1 article dans votre liste de courses",
   "selectDeliveryLocation": "Sélectionner l'adresse",
+  "deliveryLocation":"Lieu de livraison",
+  "selectFromMap":"Sélectionner sur la carte",
   "searchForAreaStreet": "Rechercher une zone, un nom de rue...",
   "useCurrentLocation": "Utiliser la position actuelle",
   "addNewAddress": "Ajouter une nouvelle adresse",
@@ -427,7 +432,7 @@
   "enterYourPhoneNumber": "Entrez votre numéro de téléphone",
   "enterYourPassword": "Entrez votre mot de passe",
   "confirmYourPassword": "Confirmez votre mot de passe",
-  "emailOrPhoneNumber": "E-mail ou numéro de téléphone",
+  "emailOrPhoneNumber": "Saisissez votre e-mail",
   "emailAddress": "Adresse e-mail",
   "uploadImages": "Télécharger des images",
   "tapToUploadPhotos": "Appuyez pour télécharger des photos",
@@ -756,7 +761,7 @@
   "whtu": "Que souhaitez-vous envoyer ?",
 
   "parcelLocation": "Lieu du destinataire",
-  "address":"Address",
+  "address":"Adresse",
   "enterDeliveryAddress": "Sélectionner l'adresse de livraison",
   "street":"Rue",
   "enterStreetName":"Saisir le nom de la rue",

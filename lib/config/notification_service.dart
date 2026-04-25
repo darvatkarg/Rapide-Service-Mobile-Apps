@@ -49,7 +49,7 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> initFirebaseMessaging(BuildContext context) async {
-    await Firebase.initializeApp();
+    // await Firebase.initializeApp();
     await _requestNotificationPermissions();
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

@@ -997,16 +997,16 @@ class AppLocalizationsTe extends AppLocalizations {
   String get deliveryPartner => 'Delivery Partner';
 
   @override
-  String get orderDetails => 'Order Details';
+  String get orderDetails => 'Parcel Details';
 
   @override
-  String get orderId => 'Order ID';
+  String get orderId => 'Parcel ID';
 
   @override
   String get payment => 'Payment';
 
   @override
-  String get orderPlaced => 'Order Placed';
+  String get orderPlaced => 'Parcel Placed';
 
   @override
   String get deliveryDetails => 'Delivery details';
@@ -1017,7 +1017,7 @@ class AppLocalizationsTe extends AppLocalizations {
   }
 
   @override
-  String get orderIdCopied => 'Order ID copied!';
+  String get orderIdCopied => 'Parcel ID copied!';
 
   @override
   String get reasonForReturn => 'Reason for return';
@@ -1088,7 +1088,7 @@ class AppLocalizationsTe extends AppLocalizations {
   String get confirmYourPassword => 'Confirm your password';
 
   @override
-  String get emailOrPhoneNumber => 'Email or Phone Number';
+  String get emailOrPhoneNumber => 'Enter your email';
 
   @override
   String get emailAddress => 'Email Address';
@@ -1158,7 +1158,7 @@ class AppLocalizationsTe extends AppLocalizations {
       'Seller information not available';
 
   @override
-  String get failedToRefreshOrderDetails => 'Failed to refresh order details';
+  String get failedToRefreshOrderDetails => 'Failed to refresh Parcel details';
 
   @override
   String productSavedForLater(String productName) {
@@ -1488,7 +1488,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String orderPlacedOn(String date) {
-    return 'Order placed on $date';
+    return 'Parcel placed on $date';
   }
 
   @override
@@ -1559,7 +1559,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get noOrdersYetDescription =>
-      'It looks like you don\'t have any orders yet.';
+      'It looks like you don\'t have any Parcel yet.';
 
   @override
   String get tryAdjustingSearchTerms => 'Try adjusting your search terms.';
@@ -1613,7 +1613,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get onlyOneStoreAtATime =>
-      'You can only order from one store at a time';
+      'You can only Parcel from one store at a time';
 
   @override
   String onlyFewLeft(Object stock) {
@@ -1878,6 +1878,15 @@ class AppLocalizationsTe extends AppLocalizations {
   String get selectFromMap => 'Select From Map';
 
   @override
+  String get receiverPhoneNumber => 'Receiver\'s phone number';
+
+  @override
+  String get runningOrders => 'Running';
+
+  @override
+  String get historyOrders => 'History';
+
+  @override
   String get freshGroceries => 'Fresh Groceries Just A Click Away!';
 
   @override
@@ -1987,7 +1996,7 @@ class AppLocalizationsTe extends AppLocalizations {
   String get addressInformation => 'Address Information';
 
   @override
-  String get orderID => 'Order ID';
+  String get orderID => 'Parcel ID';
 
   @override
   String get parcelRequestSubmittedSuccessfully =>

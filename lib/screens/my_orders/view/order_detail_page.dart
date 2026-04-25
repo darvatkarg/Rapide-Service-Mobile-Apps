@@ -102,10 +102,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         BlocListener<ReturnOrderItemBloc, ReturnOrderItemState>(
             listener: (context, ReturnOrderItemState state) {
           if (state is ReturnOrderItemSuccess) {
-            ToastManager.show(
-              context: context,
-              message: state.message,
-            );
+            // ToastManager.show(
+            //   context: context,
+            //   message: state.message,
+            // );
             apiCall();
             context.read<GetMyOrderBloc>().add(RefreshMyOrders());
           } else if (state is ReturnOrderItemFailed) {
@@ -129,7 +129,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   backgroundColor:
                       Theme.of(context).colorScheme.surfaceContainer,
                   floatingActionButton: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: AppTheme.primaryColor,
                     onPressed: () {},
                     child: const Icon(Icons.location_on),
                   ),
@@ -448,8 +448,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                         children: [
                                           Text(
                                             orderData?.payMethod ?? '',
-                                            style: const TextStyle(
-                                              color: Colors.blue,
+                                            style:  TextStyle(
+                                              color: AppTheme.primaryColor,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -466,7 +466,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                             child: const Text(
                                               "Cash on Delivery",
                                               style: TextStyle(
-                                                color: Colors.blue,
+                                                color: AppTheme.primaryColor,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -477,13 +477,13 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                       infoRow(
                                         "Order Type",
                                         orderData?.pbType ?? '',
-                                        valueColor: Colors.blue,
+                                        valueColor: AppTheme.primaryColor,
                                       ),
                                       const Divider(),
                                       infoRow(
                                         "Charge Pay By",
                                         orderData?.whoPay ?? '',
-                                        valueColor: Colors.blue,
+                                        valueColor: AppTheme.primaryColor,
                                       ),
                                     ],
                                   ),
@@ -1066,7 +1066,7 @@ class detailRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         children: [
-          Icon(icon, color: Colors.blue, size: 20),
+          Icon(icon, color: AppTheme.primaryColor, size: 20),
           const SizedBox(width: 10),
           Text(
             text,

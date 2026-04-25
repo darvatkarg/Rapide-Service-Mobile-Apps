@@ -69,13 +69,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       listener: (context, state) {
         log('Forgot Password State $state');
         if (state is ForgotPasswordSuccess) {
-          ToastManager.show(
-            context: context,
-            message: state.message.isNotEmpty
-                ? state.message
-                : 'Password reset link sent to your email',
-            type: ToastType.success,
-          );
+          // ToastManager.show(
+          //   context: context,
+          //   message: state.message.isNotEmpty
+          //       ? state.message
+          //       : 'Password reset link sent to your email',
+          //   type: ToastType.success,
+          // );
           Future.delayed(const Duration(seconds: 2), () {
             if (context.mounted) {
               GoRouter.of(context).pushReplacement(AppRoutes.login);
@@ -88,13 +88,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ? state.message
                 : "We can't find a user with that email address.";
           });
-          ToastManager.show(
-            context: context,
-            message: state.message.isNotEmpty
-                ? state.message
-                : 'Failed to send reset link',
-            type: ToastType.error,
-          );
+          // ToastManager.show(
+          //   context: context,
+          //   message: state.message.isNotEmpty
+          //       ? state.message
+          //       : 'Failed to send reset link',
+          //   type: ToastType.error,
+          // );
         }
       },
       builder: (context, state) {

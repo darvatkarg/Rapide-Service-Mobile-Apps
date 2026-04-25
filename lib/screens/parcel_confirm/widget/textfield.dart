@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hyper_local/config/theme.dart';
 
 class AppTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -30,6 +31,7 @@ class AppTextField extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       decoration: InputDecoration(
+        
         labelText: label,
         hintText: hint,
         prefixIcon: prefixIcon,
@@ -44,7 +46,7 @@ class AppTextField extends StatelessWidget {
 
         /// Color when focused
         floatingLabelStyle: const TextStyle(
-          color: Colors.blue,
+          color: AppTheme.primaryColor,
           fontWeight: FontWeight.w500,
         ),
 
@@ -60,7 +62,7 @@ class AppTextField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(
-            color: Colors.blue,
+            color: AppTheme.primaryColor,
             width: 1.6,
           ),
         ),

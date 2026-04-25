@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hyper_local/config/theme.dart';
 import 'package:hyper_local/router/app_routes.dart';
 import 'package:hyper_local/screens/my_orders/bloc/get_my_order/get_my_order_bloc.dart';
 import 'package:hyper_local/screens/my_orders/bloc/get_my_order/get_my_order_event.dart';
@@ -104,9 +105,9 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
                         children: [
-                          tabButton("Running", 0),
-                          const SizedBox(width: 20),
-                          tabButton("History", 1),
+                          tabButton(l10n?.runningOrders ?? "Running Orders", 0),
+                          SizedBox(width: 10,),
+                          tabButton(l10n?.historyOrders ?? "History Orders", 1),
                         ],
                       ),
                     ),
@@ -230,7 +231,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
             title,
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              color: isSelected ? Colors.blue : Colors.grey,
+              color: isSelected ? AppTheme.primaryColor : Colors.grey,
             ),
           ),
           const SizedBox(height: 6),
@@ -238,7 +239,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
             height: 3,
             width: 60,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.blue : Colors.transparent,
+              color: isSelected ? AppTheme.primaryColor : Colors.transparent,
               borderRadius: BorderRadius.circular(10),
             ),
           )
@@ -320,7 +321,7 @@ class OrderCard extends StatelessWidget {
               height: 60,
               width: 60,
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.15),
+                color: AppTheme.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Image.asset(
@@ -356,6 +357,7 @@ class OrderCard extends StatelessWidget {
                     icon: const Icon(
                       Icons.delivery_dining,
                       size: 18,
+                      color: AppTheme.primaryColor,
                     ),
                     label: const Text(
                       "Track Delivery",
@@ -363,8 +365,8 @@ class OrderCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.blue,
-                      side: const BorderSide(color: Colors.blue),
+                      foregroundColor: AppTheme.primaryColor,
+                      side: const BorderSide(color: AppTheme.primaryColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -388,13 +390,13 @@ class OrderCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: AppTheme.primaryColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     order.pbStatus ?? "",
                     style: const TextStyle(
-                      color: Colors.blue,
+                      color: AppTheme.primaryColor,
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
                     ),

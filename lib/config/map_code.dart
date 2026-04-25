@@ -783,23 +783,23 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget>
                 ),
                 SizedBox(height: 10.h),
 
-                Builder(
-                  builder: (context) {
-                    final l10n = AppLocalizations.of(context)!;
-                    return CustomTextFormField(
-                      controller: _zipcodeController,
-                      labelText: l10n.zipcode,
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return l10n.pleaseEnterZipcode;
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                ),
-                SizedBox(height: 10.h),
+                // Builder(
+                //   builder: (context) {
+                //     final l10n = AppLocalizations.of(context)!;
+                //     return CustomTextFormField(
+                //       controller: _zipcodeController,
+                //       labelText: l10n.zipcode,
+                //       keyboardType: TextInputType.number,
+                //       validator: (value) {
+                //         if (value!.isEmpty) {
+                //           return l10n.pleaseEnterZipcode;
+                //         }
+                //         return null;
+                //       },
+                //     );
+                //   },
+                // ),
+                // SizedBox(height: 10.h),
 
                 Builder(
                   builder: (context) {

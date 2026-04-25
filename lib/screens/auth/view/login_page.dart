@@ -132,19 +132,19 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
     if (isUserVerified != true) {
       final l10n = AppLocalizations.of(context)!;
-      ToastManager.show(
-        context: context,
-        message: l10n.noAccountFoundWithEmailOrPhone,
-        type: ToastType.error,
-      );
+      // ToastManager.show(
+      //   context: context,
+      //   message: l10n.noAccountFoundWithEmailOrPhone,
+      //   type: ToastType.error,
+      // );
       return;
     }
 
     if (_passwordController.text.isEmpty) {
-      ToastManager.show(
-          context: context,
-          message: l10n.pleaseEnterYourPassword,
-          type: ToastType.error);
+      // ToastManager.show(
+      //     context: context,
+      //     message: l10n.pleaseEnterYourPassword,
+      //     type: ToastType.error);
       return;
     }
 
@@ -171,10 +171,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               if (state is AuthSuccess) {
                 // GoRouter.of(context).pushReplacement(AppRoutes.splashScreen);
                 GoRouter.of(context).go(AppRoutes.home);
-                ToastManager.show(
-                    context: context,
-                    message: state.message,
-                    type: ToastType.success);
+                // ToastManager.show(
+                //     context: context,
+                //     message: state.message,
+                //     type: ToastType.success);
                 final getUserCartBloc =
                     context.read<GetUserCartBloc>(); // Capture here
 
@@ -183,10 +183,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       SyncCart()); // Use captured reference – no context needed
                 });
               } else if (state is AuthFailed) {
-                ToastManager.show(
-                    context: context,
-                    message: state.error,
-                    type: ToastType.error);
+                // ToastManager.show(
+                //     context: context,
+                //     message: state.error,
+                //     type: ToastType.error);
               } else if (state is SocialAuthSuccess) {
                 if (state.newUser) {
                   GoRouter.of(context).push(AppRoutes.register, extra: {
@@ -410,11 +410,11 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               : isButtonEnabled
                                   ? _handleLogin
                                   : () {
-                                      ToastManager.show(
-                                          context: context,
-                                          message:
-                                              'Please enter the empty fields',
-                                          type: ToastType.error);
+                                      // ToastManager.show(
+                                      //     context: context,
+                                      //     message:
+                                      //         'Please enter the empty fields',
+                                      //     type: ToastType.error);
                                     },
                           child: Builder(
                             builder: (context) {

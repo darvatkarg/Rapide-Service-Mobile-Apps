@@ -433,7 +433,7 @@ abstract class AppLocalizations {
   /// No description provided for @placeOrder.
   ///
   /// In en, this message translates to:
-  /// **'Place Order'**
+  /// **'Place Parcel'**
   String get placeOrder;
 
   /// No description provided for @selectPaymentMethod.
@@ -577,43 +577,43 @@ abstract class AppLocalizations {
   /// No description provided for @myOrders.
   ///
   /// In en, this message translates to:
-  /// **'My Orders'**
+  /// **'My Parcels'**
   String get myOrders;
 
   /// No description provided for @noOrdersYet.
   ///
   /// In en, this message translates to:
-  /// **'No orders yet'**
+  /// **'No Parcels yet'**
   String get noOrdersYet;
 
   /// No description provided for @failedToLoadOrders.
   ///
   /// In en, this message translates to:
-  /// **'Failed to load orders'**
+  /// **'Failed to load Parcels'**
   String get failedToLoadOrders;
 
   /// No description provided for @rateOrder.
   ///
   /// In en, this message translates to:
-  /// **'Rate Order'**
+  /// **'Rate Parcel'**
   String get rateOrder;
 
   /// No description provided for @howWasYourOrder.
   ///
   /// In en, this message translates to:
-  /// **'How was your order?'**
+  /// **'How was your Parcel?'**
   String get howWasYourOrder;
 
   /// No description provided for @orderSummary.
   ///
   /// In en, this message translates to:
-  /// **'Order Summary'**
+  /// **'Parcel Summary'**
   String get orderSummary;
 
   /// No description provided for @orderDetailsRefreshed.
   ///
   /// In en, this message translates to:
-  /// **'Order details refreshed'**
+  /// **'Parcel details refreshed'**
   String get orderDetailsRefreshed;
 
   /// No description provided for @rateYourExperience.
@@ -625,7 +625,7 @@ abstract class AppLocalizations {
   /// No description provided for @failedToLoadOrderDetails.
   ///
   /// In en, this message translates to:
-  /// **'Failed to load order details'**
+  /// **'Failed to load parcel details'**
   String get failedToLoadOrderDetails;
 
   /// No description provided for @noItemsToDisplay.
@@ -1459,7 +1459,7 @@ abstract class AppLocalizations {
   /// No description provided for @noOrderFound.
   ///
   /// In en, this message translates to:
-  /// **'No Order Found'**
+  /// **'No Parcel Found'**
   String get noOrderFound;
 
   /// No description provided for @noSearchResults.
@@ -1999,13 +1999,13 @@ abstract class AppLocalizations {
   /// No description provided for @orderDetails.
   ///
   /// In en, this message translates to:
-  /// **'Order Details'**
+  /// **'Parcel Details'**
   String get orderDetails;
 
   /// No description provided for @orderId.
   ///
   /// In en, this message translates to:
-  /// **'Order ID'**
+  /// **'Parcel ID'**
   String get orderId;
 
   /// No description provided for @payment.
@@ -2017,7 +2017,7 @@ abstract class AppLocalizations {
   /// No description provided for @orderPlaced.
   ///
   /// In en, this message translates to:
-  /// **'Order Placed'**
+  /// **'Parcel Placed'**
   String get orderPlaced;
 
   /// No description provided for @deliveryDetails.
@@ -2035,7 +2035,7 @@ abstract class AppLocalizations {
   /// No description provided for @orderIdCopied.
   ///
   /// In en, this message translates to:
-  /// **'Order ID copied!'**
+  /// **'Parcel ID copied!'**
   String get orderIdCopied;
 
   /// No description provided for @reasonForReturn.
@@ -2173,7 +2173,7 @@ abstract class AppLocalizations {
   /// No description provided for @emailOrPhoneNumber.
   ///
   /// In en, this message translates to:
-  /// **'Email or Phone Number'**
+  /// **'Enter your email'**
   String get emailOrPhoneNumber;
 
   /// No description provided for @emailAddress.
@@ -2293,7 +2293,7 @@ abstract class AppLocalizations {
   /// No description provided for @failedToRefreshOrderDetails.
   ///
   /// In en, this message translates to:
-  /// **'Failed to refresh order details'**
+  /// **'Failed to refresh Parcel details'**
   String get failedToRefreshOrderDetails;
 
   /// No description provided for @productSavedForLater.
@@ -2893,7 +2893,7 @@ abstract class AppLocalizations {
   /// No description provided for @orderPlacedOn.
   ///
   /// In en, this message translates to:
-  /// **'Order placed on {date}'**
+  /// **'Parcel placed on {date}'**
   String orderPlacedOn(String date);
 
   /// No description provided for @locationAccessDescription.
@@ -3013,7 +3013,7 @@ abstract class AppLocalizations {
   /// No description provided for @noOrdersYetDescription.
   ///
   /// In en, this message translates to:
-  /// **'It looks like you don\'t have any orders yet.'**
+  /// **'It looks like you don\'t have any Parcel yet.'**
   String get noOrdersYetDescription;
 
   /// No description provided for @tryAdjustingSearchTerms.
@@ -3097,7 +3097,7 @@ abstract class AppLocalizations {
   /// No description provided for @onlyOneStoreAtATime.
   ///
   /// In en, this message translates to:
-  /// **'You can only order from one store at a time'**
+  /// **'You can only Parcel from one store at a time'**
   String get onlyOneStoreAtATime;
 
   /// No description provided for @onlyFewLeft.
@@ -3574,6 +3574,24 @@ abstract class AppLocalizations {
   /// **'Select From Map'**
   String get selectFromMap;
 
+  /// No description provided for @receiverPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Receiver\'s phone number'**
+  String get receiverPhoneNumber;
+
+  /// No description provided for @runningOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get runningOrders;
+
+  /// No description provided for @historyOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get historyOrders;
+
   /// No description provided for @freshGroceries.
   ///
   /// In en, this message translates to:
@@ -3793,7 +3811,7 @@ abstract class AppLocalizations {
   /// No description provided for @orderID.
   ///
   /// In en, this message translates to:
-  /// **'Order ID'**
+  /// **'Parcel ID'**
   String get orderID;
 
   /// No description provided for @parcelRequestSubmittedSuccessfully.

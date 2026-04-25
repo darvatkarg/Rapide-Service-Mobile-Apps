@@ -345,11 +345,11 @@ class _AccountPageState extends State<AccountPage> {
                             // Language
                             BlocBuilder<LanguageBloc, LanguageState>(
                               builder: (context, state) {
-                                String currentLanguage = 'English';
+                                String currentLanguage = 'French';
                                 if (state is LanguageLoaded) {
                                   final language = Global.supportedLanguages.firstWhere(
                                         (lang) => lang['code'] == state.languageCode,
-                                    orElse: () => {'name': 'English', 'nativeName': 'English'},
+                                    orElse: () => {'name': 'French', 'nativeName': 'French'},
                                   );
                                   currentLanguage = language['nativeName']!;
                                 }

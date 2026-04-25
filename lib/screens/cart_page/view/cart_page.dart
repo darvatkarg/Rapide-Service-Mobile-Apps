@@ -326,10 +326,10 @@ class _CartPageState extends State<CartPage> {
                             isCartLoading = false;
                           });
 
-                          ToastManager.show(
-                              context: context,
-                              message: '${state.productName} is saved for later'
-                          );
+                          // ToastManager.show(
+                          //     context: context,
+                          //     message: '${state.productName} is saved for later'
+                          // );
                           context.read<GetUserCartBloc>().add(FetchUserCart(
                               addressId: selectedAddress?.id,
                               rushDelivery: selectedDeliveryType == DeliveryType.rush,
@@ -486,10 +486,10 @@ class _CartPageState extends State<CartPage> {
                           setState(() {
                             isCartLoading = false;
                           });
-                          ToastManager.show(
-                              context: context,
-                              message: AppLocalizations.of(context)!.promoCodeAppliedOnYourCart
-                          );
+                          // ToastManager.show(
+                          //     context: context,
+                          //     message: AppLocalizations.of(context)!.promoCodeAppliedOnYourCart
+                          // );
                         }
                         if(state is PromoCodeSelected){
                           setState(() {
@@ -497,10 +497,10 @@ class _CartPageState extends State<CartPage> {
                             isCartLoading = false;
                           });
                           if(state.promoCode.isNotEmpty) {
-                            ToastManager.show(
-                                context: context,
-                                message: AppLocalizations.of(context)!.promoCodeAppliedOnYourCart
-                            );
+                            // ToastManager.show(
+                            //     context: context,
+                            //     message: AppLocalizations.of(context)!.promoCodeAppliedOnYourCart
+                            // );
                           }
                         }
                         if(state is PromoCodeRemoved){

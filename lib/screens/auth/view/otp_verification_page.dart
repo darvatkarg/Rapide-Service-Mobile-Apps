@@ -182,22 +182,22 @@ class _OTPVerificationPageState extends State<OTPVerificationPage>
           setState(() {
             _verificationId = state.verificationId;
           });
-          ToastManager.show(
-            context: context,
-            message:
-                AppLocalizations.of(context)!.otpSentTo(widget.phoneNumber),
-            type: ToastType.success,
-          );
+          // ToastManager.show(
+          //   context: context,
+          //   message:
+          //       AppLocalizations.of(context)!.otpSentTo(widget.phoneNumber),
+          //   type: ToastType.success,
+          // );
         } else if (state is OTPVerified) {
           _completeRegistration();
         } else if (state is AuthSuccess) {
           if (!mounted) return;
-          context.read<AuthBloc>().add(ClearRegistrationDataEvent());
-          ToastManager.show(
-            context: context,
-            message: state.message,
-            type: ToastType.success,
-          );
+          // context.read<AuthBloc>().add(ClearRegistrationDataEvent());
+          // ToastManager.show(
+          //   context: context,
+          //   message: state.message,
+          //   type: ToastType.success,
+          // );
           if (mounted) {
             GoRouter.of(context).pushReplacement(AppRoutes.splashScreen);
           }

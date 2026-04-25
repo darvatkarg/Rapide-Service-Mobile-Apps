@@ -1864,6 +1864,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectFromMap => 'Select From Map';
 
   @override
+  String get receiverPhoneNumber => 'Receiver\'s phone number';
+
+  @override
+  String get runningOrders => 'Running';
+
+  @override
+  String get historyOrders => 'History';
+
+  @override
   String get freshGroceries => 'Fresh Groceries Just A Click Away!';
 
   @override
@@ -1973,7 +1982,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addressInformation => 'Address Information';
 
   @override
-  String get orderID => 'Order ID';
+  String get orderID => 'Parcel ID';
 
   @override
   String get parcelRequestSubmittedSuccessfully =>

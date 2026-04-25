@@ -203,11 +203,11 @@ class _RateYourExpCommentsState extends State<RateYourExpComments> {
               final wasDelete = _deletedOrderItemId != null;
 
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                ToastManager.show(
-                  context: context,
-                  message: wasDelete ? AppLocalizations.of(context)!.feedbackDeletedSuccessfully : AppLocalizations.of(context)!.feedbackUpdatedSuccessfully,
-                  type: ToastType.success,
-                );
+                // ToastManager.show(
+                //   context: context,
+                //   message: wasDelete ? AppLocalizations.of(context)!.feedbackDeletedSuccessfully : AppLocalizations.of(context)!.feedbackUpdatedSuccessfully,
+                //   type: ToastType.success,
+                // );
               });
 
               context.read<ProductFeedbackBloc>().add(ResetProductFeedback());

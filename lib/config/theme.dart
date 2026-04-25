@@ -3,7 +3,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 class AppTheme {
   /// App main color
-  static const Color primaryColor = Color(0xFF006BD5);
+  static const Color primaryColor = Color(0xFFe3171f);
   static Color primaryVariant = primaryColor.withValues(alpha: 0.8);
   static const Color bottomNavSelectedColor = Color(0xFF4CAF6E); 
 

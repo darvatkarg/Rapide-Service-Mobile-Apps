@@ -94,7 +94,23 @@ void main() async {
   CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
   await FastCachedImageConfig.init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+   try {
+  
+    if (Firebase.apps.isEmpty) {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
+    // await Firebase.initializeApp(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
+  
+  } catch (e) {
+  
+    // Continue anyway - app might work without notifications
+  }
   await Hive.initFlutter();
   Hive.registerAdapter(CartSyncActionAdapter());
   Hive.registerAdapter(UserCartAdapter());

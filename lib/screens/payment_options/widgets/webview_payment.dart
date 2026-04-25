@@ -90,11 +90,11 @@ class _WebViewPaymentPageState extends State<WebViewPaymentPage> {
 
   void _handleSuccess(String? reference) {
     // Show success message
-    ToastManager.show(
-        context: context,
-        message: AppLocalizations.of(context)!.paymentSuccessful,
-        type: ToastType.success
-    );
+    // ToastManager.show(
+    //     context: context,
+    //     message: AppLocalizations.of(context)!.paymentSuccessful,
+    //     type: ToastType.success
+    // );
 
     // Delay to allow the user to see the message
     Future.delayed(const Duration(seconds: 1), () {

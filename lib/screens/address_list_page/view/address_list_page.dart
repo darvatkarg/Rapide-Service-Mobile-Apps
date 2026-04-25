@@ -349,10 +349,10 @@ class _AddressListPageState extends State<AddressListPage> {
                   }
                 } else if (state is GetAddressListFailed) {
                   Navigator.pop(context);
-                  ToastManager.show(
-                      context: context,
-                      message: 'Failed to delete address',
-                      type: ToastType.error);
+                  // ToastManager.show(
+                  //     context: context,
+                  //     message: 'Failed to delete address',
+                  //     type: ToastType.error);
                 }
               },
               child: Builder(builder: (context) {

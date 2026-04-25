@@ -1095,7 +1095,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get confirmYourPassword => 'Confirmez votre mot de passe';
 
   @override
-  String get emailOrPhoneNumber => 'E-mail ou numéro de téléphone';
+  String get emailOrPhoneNumber => 'Saisissez votre e-mail';
 
   @override
   String get emailAddress => 'Adresse e-mail';
@@ -1896,10 +1896,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Créez votre première liste de souhaits pour organiser et enregistrer les articles que vous aimez';
 
   @override
-  String get deliveryLocation => 'Delivery Location';
+  String get deliveryLocation => 'Lieu de livraison';
 
   @override
-  String get selectFromMap => 'Select From Map';
+  String get selectFromMap => 'Sélectionner sur la carte';
+
+  @override
+  String get receiverPhoneNumber => 'Numéro de téléphone du destinataire';
+
+  @override
+  String get runningOrders => 'En cours';
+
+  @override
+  String get historyOrders => 'Historique';
 
   @override
   String get freshGroceries => 'Des courses fraîches à portée de clic !';
@@ -1946,7 +1955,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get parcelLocation => 'Lieu du destinataire';
 
   @override
-  String get address => 'Address';
+  String get address => 'Adresse';
 
   @override
   String get enterDeliveryAddress => 'Sélectionner l\'adresse de livraison';

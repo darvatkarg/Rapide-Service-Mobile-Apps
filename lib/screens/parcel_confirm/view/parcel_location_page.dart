@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hyper_local/config/theme.dart';
 import 'package:hyper_local/l10n/app_localizations.dart';
 import 'package:hyper_local/router/app_routes.dart';
 import 'package:hyper_local/screens/parcel_confirm/widget/textfield.dart';
@@ -79,7 +80,7 @@ class _ParcelLocationScreenState extends State<ParcelLocationScreen> {
           height: 55,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF1A73E8),
+              backgroundColor: AppTheme.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -143,11 +144,14 @@ class _ParcelLocationScreenState extends State<ParcelLocationScreen> {
                       onTap: () => _navigateToAddAddress(),
                       child: Row(
                         children: [
-                          Icon(Icons.location_on, color: Colors.blue),
+                          Icon(
+                            Icons.location_on,
+                            color: AppTheme.primaryColor,
+                          ),
                           SizedBox(width: 5),
                           Text(
                             l10n?.selectFromMap ?? "Select From Map",
-                            style: TextStyle(color: Colors.blue),
+                            style: TextStyle(color: AppTheme.primaryColor),
                           )
                         ],
                       ),
@@ -160,6 +164,7 @@ class _ParcelLocationScreenState extends State<ParcelLocationScreen> {
                 AppTextField(
                   isEditable: false,
                   controller: locationController,
+
                   label: l10n?.address ?? "Select delivery address ",
                   hint:
                       l10n?.enterDeliveryAddress ?? "Select delivery address ",
@@ -254,7 +259,10 @@ class _ParcelLocationScreenState extends State<ParcelLocationScreen> {
                     FilteringTextInputFormatter.digitsOnly,
                   ],
                   decoration: InputDecoration(
-                    labelText: "Receiver's phone number",
+                    labelText: l10n?.receiver ?? "Receiver's name *",
+                    labelStyle: TextStyle(
+                      color: phoneError != null ? Colors.red[900] : Colors.grey,
+                    ),
                     prefix: const Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Text("+229"),

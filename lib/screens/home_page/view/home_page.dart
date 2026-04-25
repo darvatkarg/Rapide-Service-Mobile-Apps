@@ -198,7 +198,8 @@ class _HomePageState extends State<HomePage>
       _SendCategory(
         imagePath: 'assets/images/packages.png',
         title: l10n?.package ?? "Package",
-        subtitle: l10n?.smallOrLarge ?? "Small or large packages delivered fast",
+        subtitle:
+            l10n?.smallOrLarge ?? "Small or large packages delivered fast",
       ),
     ];
   }
@@ -1990,7 +1991,8 @@ class _BannerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: banner.bgColor,
+        color: AppTheme.primaryColor.withValues(alpha: 0.1),
+        //banner.bgColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -2026,7 +2028,7 @@ class _BannerCard extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF006BD5),
+                      backgroundColor: AppTheme.primaryColor,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -2084,7 +2086,7 @@ class _SendCategoryCard extends StatelessWidget {
   final _SendCategory category;
   const _SendCategoryCard({required this.category});
 
-    void _openLocationBottomSheet(BuildContext context) {
+  void _openLocationBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
