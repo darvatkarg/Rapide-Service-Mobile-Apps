@@ -82,6 +82,7 @@ dependencies:
   sms_autofill: ^2.3.0
   flutter_intl_phone_field: ^0.0.7
   flutter_secure_storage: ^10.0.0
+  firebase_database: ^12.3.0
 
 
 dev_dependencies:

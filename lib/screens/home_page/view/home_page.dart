@@ -156,20 +156,20 @@ class _HomePageState extends State<HomePage>
 
     return [
       BannerModel(
-        title: l10n?.freshGroceries ?? "Fresh Groceries\nJust A Click Away!",
-        subtitle: l10n?.discoverAmazing ??
-            "Discover amazing offers on fresh produce and daily essentials.",
-        buttonText: l10n?.startOrdering ?? "Start Ordering",
-        imageUrl: 'assets/images/vegitable.png',
-        bgColor: AppTheme.primaryVariant.withValues(alpha: 0.1),
+        // title: l10n?.freshGroceries ?? "Fresh Groceries\nJust A Click Away!",
+        // subtitle: l10n?.discoverAmazing ??
+        //     "Discover amazing offers on fresh produce and daily essentials.",
+        // buttonText: l10n?.startOrdering ?? "Start Ordering",
+        imageUrl: 'assets/images/banner_1.png',
+        // bgColor: AppTheme.primaryVariant.withValues(alpha: 0.1),
       ),
       BannerModel(
-        title: l10n?.bestDeals ?? "Best Deals\nEvery Day!",
-        subtitle: l10n?.discoverAmazing ??
-            "Discover amazing offers on fresh produce and daily essentials.",
-        buttonText: l10n?.startOrdering ?? "Start Ordering",
-        imageUrl: 'assets/images/vegitable.png',
-        bgColor: AppTheme.primaryVariant.withValues(alpha: 0.1),
+        // title: l10n?.bestDeals ?? "Best Deals\nEvery Day!",
+        // subtitle: l10n?.discoverAmazing ??
+        //     "Discover amazing offers on fresh produce and daily essentials.",
+        // buttonText: l10n?.startOrdering ?? "Start Ordering",
+        imageUrl: 'assets/images/banner_2.png',
+        // bgColor: AppTheme.primaryVariant.withValues(alpha: 0.1),
       ),
     ];
   }
@@ -1968,18 +1968,18 @@ class _HomePageState extends State<HomePage>
 }
 
 class BannerModel {
-  final String title;
-  final String subtitle;
-  final String buttonText;
+  // final String title;
+  // final String subtitle;
+  // final String buttonText;
   final String imageUrl;
-  final Color bgColor;
+  // final Color bgColor;
 
   BannerModel({
-    required this.title,
-    required this.subtitle,
-    required this.buttonText,
+    // required this.title,
+    // required this.subtitle,
+    // required this.buttonText,
     required this.imageUrl,
-    required this.bgColor,
+    // required this.bgColor,
   });
 }
 
@@ -1989,13 +1989,40 @@ class _BannerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(16),
+        bottomRight: Radius.circular(16),
+        topLeft: Radius.circular(16),
+        bottomLeft: Radius.circular(16),
+      ),
+      child: Image.asset(
+        banner.imageUrl,
+        fit: BoxFit.cover,
+      ),
+    );
+    /*
+    Container(
+     
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor.withValues(alpha: 0.1),
+        // color: AppTheme.primaryColor.withValues(alpha: 0.1),
         //banner.bgColor,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Row(
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(16),
+          bottomRight: Radius.circular(16),
+        ),
+        child: Image.asset(
+          banner.imageUrl,
+          // height: 100.h,
+          // width: 100.w,
+          fit: BoxFit.contain,
+        ),
+      ),
+      /*
+      Row(
         children: [
           // Left content
           Expanded(
@@ -2066,7 +2093,9 @@ class _BannerCard extends StatelessWidget {
           ),
         ],
       ),
+      */
     );
+    */
   }
 }
 

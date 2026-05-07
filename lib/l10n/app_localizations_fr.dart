@@ -1988,10 +1988,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get receiverPhone => 'Receiver\'s phone number';
 
   @override
-  String get senderDetails => 'Coordonnées de l\'expéditeur';
+  String get senderDetails => 'Détails de l\'expéditeur';
 
   @override
-  String get receiverDetails => 'Coordonnées du destinataire';
+  String get receiverDetails => 'Détails du destinataire';
 
   @override
   String get parcelRequest => ' Demande d\'envoi';
@@ -2036,4 +2036,55 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get saveContinue => 'Enregistrer et continuer';
+
+  @override
+  String get billingSummary => 'Résumé de la facturation';
+
+  @override
+  String get chargePayBy => 'Frais payés par';
+
+  @override
+  String get due => 'Dû';
+
+  @override
+  String get generalInfo => 'Informations générales';
+
+  @override
+  String get noRecordFound => 'Aucun enregistrement trouvé';
+
+  @override
+  String get orderDate => 'Date comm';
+
+  @override
+  String get parcelCategory => 'Catégorie d\'objet';
+
+  @override
+  String get parcelDeliveryItemms => 'Éléments de livraison';
+
+  @override
+  String get parcelType => 'Type d\'objet';
+
+  @override
+  String get paymentDetails => 'Détails du paiement';
+
+  @override
+  String get topUpNow => 'Recharger maintenant';
+
+  @override
+  String get totalAmount => 'Montant total';
+
+  @override
+  String get unpaid => 'Impayé';
+
+  @override
+  String get walletBalance => 'Solde du portefeuille';
+
+  @override
+  String get walletHistory => 'Historique du portefeuille';
+
+  @override
+  String get orderNumbers => 'Numéros de commande';
+
+  @override
+  String get orderBy => 'Commandé par';
 }

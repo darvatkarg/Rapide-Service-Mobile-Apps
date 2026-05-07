@@ -3837,6 +3837,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save & Continue'**
   String get saveContinue;
+
+  /// No description provided for @billingSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Summary'**
+  String get billingSummary;
+
+  /// No description provided for @chargePayBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Charge Pay By'**
+  String get chargePayBy;
+
+  /// No description provided for @due.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get due;
+
+  /// No description provided for @generalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'General Info'**
+  String get generalInfo;
+
+  /// No description provided for @noRecordFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No record found'**
+  String get noRecordFound;
+
+  /// No description provided for @orderDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Date'**
+  String get orderDate;
+
+  /// No description provided for @parcelCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel Category'**
+  String get parcelCategory;
+
+  /// No description provided for @parcelDeliveryItemms.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel Delivery Items'**
+  String get parcelDeliveryItemms;
+
+  /// No description provided for @parcelType.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel Type'**
+  String get parcelType;
+
+  /// No description provided for @paymentDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Details'**
+  String get paymentDetails;
+
+  /// No description provided for @topUpNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Up Now'**
+  String get topUpNow;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Amount'**
+  String get totalAmount;
+
+  /// No description provided for @unpaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get unpaid;
+
+  /// No description provided for @walletBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet Balance'**
+  String get walletBalance;
+
+  /// No description provided for @walletHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet History'**
+  String get walletHistory;
+
+  /// No description provided for @orderNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Number'**
+  String get orderNumbers;
+
+  /// No description provided for @orderBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Order by'**
+  String get orderBy;
 }
 
 class _AppLocalizationsDelegate

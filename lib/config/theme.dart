@@ -9,6 +9,7 @@ class AppTheme {
 
   static Color lightFontColor = Colors.black;
   static Color darkFontColor = Colors.white;
+  static const Color accentOrange = Color(0xFFFF783C);
 
   /// Light Theme Colors
   static const Color mainLightBackgroundColor = Colors.white;

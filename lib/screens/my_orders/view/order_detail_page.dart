@@ -128,302 +128,23 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   showAppBar: true,
                   backgroundColor:
                       Theme.of(context).colorScheme.surfaceContainer,
-                  floatingActionButton: FloatingActionButton(
-                    backgroundColor: AppTheme.primaryColor,
-                    onPressed: () {},
-                    child: const Icon(Icons.location_on),
-                  ),
-                  body:
-                      /*
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        // /// TOP ILLUSTRATION
-                        // Container(
-                        //   width: double.infinity,
-                        //   padding: const EdgeInsets.symmetric(vertical: 40),
-                        //   color: Colors.grey[200],
-                        //   child: const Icon(
-                        //     Icons.send,
-                        //     size: 70,
-                        //     color: Colors.blue,
-                        //   ),
-                        // ),
-
-                        const SizedBox(height: 10),
-
-                        /// GENERAL INFO
-                        sectionCard(
-                          title: "General Info",
-                          children: [
-                            infoRow("Order date", "01 Apr 2026, 11:49 PM"),
-                            const Divider(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "Payment Method",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 6,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue[50],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: const Text(
-                                    "Cash on Delivery",
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            const Divider(),
-                            infoRow("Order Type", "Parcel",
-                                valueColor: Colors.blue),
-                            const Divider(),
-                            infoRow("Charge Pay By", "Sender",
-                                valueColor: Colors.blue),
-                          ],
-                        ),
-
-                        const SizedBox(height: 10),
-
-                        /// SENDER DETAILS
-                        sectionCard(
-                          title: "Sender Details",
-                          children: const [
-                            detailRow(Icons.person, "swmo"),
-                            detailRow(Icons.phone, "+19067335884"),
-                            detailRow(Icons.email, "suraa241098@gmail.com"),
-                          ],
-                        ),
-
-                        const SizedBox(height: 10),
-
-                        /// RECEIVER DETAILS
-                        sectionCard(
-                          title: "Receiver Details",
-                          children: const [
-                            detailRow(Icons.person, "bbs"),
-                            detailRow(Icons.phone, "+19067335884"),
-                            detailRow(Icons.email, "suraa241098@gmail.com"),
-                          ],
-                        ),
-
-                        const SizedBox(height: 10),
-
-                        sectionCard(
-                          title: "Parcel Category",
-                          children: [
-                            Row(
-                              children: const [
-                                Text("🎁", style: TextStyle(fontSize: 30)),
-                                SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Gifts",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      "Send heartfelt presents, right on time",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 13,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-
-                        const SizedBox(height: 10),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              /// PAYMENT DETAILS HEADER
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Payment Details",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.red.withOpacity(.15),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: const Text(
-                                      "Unpaid",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-
-                              const SizedBox(height: 12),
-                              const Divider(),
-
-                              const SizedBox(height: 10),
-
-                              /// PAYMENT METHOD
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(Icons.payments_outlined, size: 20),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        "Cash",
-                                        style: TextStyle(fontSize: 16),
-                                      )
-                                    ],
-                                  ),
-                                  const Text(
-                                    "\$ 109.00",
-                                    style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                ],
-                              ),
-
-                              const SizedBox(height: 25),
-
-                              /// BILLING SUMMARY TITLE
-                              const Text(
-                                "Billing Summary",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-
-                              const SizedBox(height: 15),
-
-                              /// DELIVERY FEE
-                              billingRow("Delivery Fee", "(+) \$ 90.00"),
-
-                              const SizedBox(height: 10),
-
-                              /// DELIVERY TIPS
-                              billingRow("Delivery Man Tips", "(+) \$ 0.00"),
-
-                              const SizedBox(height: 10),
-
-                              /// TAX
-                              billingRow("Vat/Tax", "(+) \$ 19.00"),
-
-                              const SizedBox(height: 10),
-
-                              /// ADDITIONAL CHARGE
-                              billingRow("Additional Charge", "(+) \$ 0.00"),
-
-                              const SizedBox(height: 15),
-                              const Divider(),
-
-                              const SizedBox(height: 10),
-
-                              /// TOTAL AMOUNT
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Total Amount",
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 3,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.red.withOpacity(.15),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        child: const Text(
-                                          "Due",
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const Text(
-                                    "\$ 109.00",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  */
-
-                      CustomRefreshIndicator(
+        
+                  body: CustomRefreshIndicator(
                     onRefresh: apiCall,
                     child: BlocBuilder<OrderDetailBloc, OrderDetailState>(
                       builder: (context, state) {
                         if (state is GetMyParcelOrderDetail) {
                           final orderData = state.parcelDetails.parcel;
+                          final status = orderData!.status!.toLowerCase();
+
+                          final deliveryBoyId =
+                              orderData.deliveryAssignments.isNotEmpty
+                                  ? orderData
+                                      .deliveryAssignments.first.deliveryBoyId
+                                  : null;
+                          print("Order Detail Data: ${status}");
+                          print("delivery boy id: ${deliveryBoyId}");
+
                           return SingleChildScrollView(
                             child: Padding(
                               padding: EdgeInsets.all(12.0.h),
@@ -431,12 +152,17 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                 children: [
                                   const SizedBox(height: 10),
 
-                                  /// GENERAL INFO
+                                  // Text(orderData.toString()),
                                   sectionCard(
-                                    title: "General Info",
+                                    title: AppLocalizations.of(context)
+                                            ?.generalInfo ??
+                                        "General Info",
                                     children: [
+                                      SizedBox(height: 10.h),
                                       infoRow(
-                                        "Order date",
+                                        AppLocalizations.of(context)
+                                                ?.orderDate ??
+                                            'Order Date',
                                         DateFormat('dd MMM yyyy, hh:mm a')
                                             .format(DateTime.parse(
                                                 orderData!.createdAt!)),
@@ -447,11 +173,13 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            orderData?.payMethod ?? '',
-                                            style:  TextStyle(
-                                              color: AppTheme.primaryColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                            AppLocalizations.of(context)
+                                                    ?.paymentMethod ??
+                                                "Payment Method",
+                                            // style: TextStyle(
+                                            //   color: AppTheme.primaryColor,
+                                            //   fontWeight: FontWeight.w500,
+                                            // ),
                                           ),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
@@ -463,8 +191,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                             ),
-                                            child: const Text(
-                                              "Cash on Delivery",
+                                            child: Text(
+                                              orderData.payMethod ?? '',
                                               style: TextStyle(
                                                 color: AppTheme.primaryColor,
                                                 fontWeight: FontWeight.w500,
@@ -475,13 +203,16 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                       ),
                                       const Divider(),
                                       infoRow(
-                                        "Order Type",
+                                        AppLocalizations.of(context)?.orderBy ??
+                                            "Order By",
                                         orderData?.pbType ?? '',
                                         valueColor: AppTheme.primaryColor,
                                       ),
                                       const Divider(),
                                       infoRow(
-                                        "Charge Pay By",
+                                        AppLocalizations.of(context)
+                                                ?.chargePayBy ??
+                                            "Charge Pay By",
                                         orderData?.whoPay ?? '',
                                         valueColor: AppTheme.primaryColor,
                                       ),
@@ -492,8 +223,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
 
                                   /// SENDER DETAILS
                                   sectionCard(
-                                    title: "Sender Details",
+                                    title: AppLocalizations.of(context)
+                                            ?.senderDetails ??
+                                        "Sender Details",
                                     children: [
+                                      SizedBox(height: 10.h),
                                       detailRow(Icons.person,
                                           orderData?.user?.name ?? ""),
                                       detailRow(Icons.phone,
@@ -507,8 +241,57 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
 
                                   /// RECEIVER DETAILS
                                   sectionCard(
-                                    title: "Receiver Details",
+                                    title: AppLocalizations.of(context)
+                                            ?.receiverDetails ??
+                                        "Receiver Details",
+                                    trailing: (status == "out for delivery")
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              print(
+                                                " Receiver Location: Lat=${orderData.receiverLat}, Long=${orderData.receiverLong}",
+                                              );
+
+                                              GoRouter.of(context).pushNamed(
+                                                'delivery-zone-map',
+                                                extra: {
+                                                  'rc_lat': orderData
+                                                      .receiverLat
+                                                      .toString(),
+                                                  'rc_long': orderData
+                                                      .receiverLong
+                                                      .toString(),
+                                                  'driver_id': orderData
+                                                          .deliveryAssignments
+                                                          .isNotEmpty
+                                                      ? orderData
+                                                          .deliveryAssignments
+                                                          .first
+                                                          .deliveryBoyId
+                                                          .toString()
+                                                      : "",
+                                                },
+                                              );
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.primaryColor
+                                                    .withOpacity(
+                                                  0.1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Icon(
+                                                Icons.location_on,
+                                                color: AppTheme.primaryColor,
+                                                size: 20,
+                                              ),
+                                            ),
+                                          )
+                                        : null,
                                     children: [
+                                      SizedBox(height: 10.h),
                                       detailRow(Icons.person,
                                           orderData?.receiverName ?? ""),
                                       detailRow(Icons.phone,
@@ -520,8 +303,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                   const SizedBox(height: 10),
 
                                   sectionCard(
-                                    title: "Parcel Category",
+                                    title: AppLocalizations.of(context)
+                                            ?.parcelCategory ??
+                                        "Parcel Category",
                                     children: [
+                                      SizedBox(height: 10.h),
                                       Row(
                                         children: [
                                           Image.asset(
@@ -574,8 +360,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text(
-                                              "Payment Details",
+                                            Text(
+                                              AppLocalizations.of(context)
+                                                      ?.paymentDetails ??
+                                                  "Payment Details",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
@@ -650,8 +438,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                         const SizedBox(height: 25),
 
                                         /// BILLING SUMMARY TITLE
-                                        const Text(
-                                          "Billing Summary",
+                                        Text(
+                                          AppLocalizations.of(context)
+                                                  ?.billingSummary ??
+                                              "Billing Summary",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
@@ -662,7 +452,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
 
                                         /// DELIVERY FEE
                                         billingRow(
-                                          "Delivery Fee",
+                                          AppLocalizations.of(context)
+                                                  ?.deliveryFee ??
+                                              "Delivery Fee",
                                           "(+) FCFA ${orderData?.deliveryCharge ?? "0"}",
                                         ),
 
@@ -695,8 +487,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                           children: [
                                             Row(
                                               children: [
-                                                const Text(
-                                                  "Total Amount",
+                                                Text(
+                                                  AppLocalizations.of(context)
+                                                          ?.totalAmount ??
+                                                      "Total Amount",
                                                   style: TextStyle(
                                                     fontSize: 17,
                                                     fontWeight: FontWeight.bold,
@@ -729,7 +523,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                               ],
                                             ),
                                             Text(
-                                              "${orderData?.deliveryCharge ?? "0"}",
+                                              "FCFA ${orderData?.deliveryCharge ?? "0"}",
                                               style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
@@ -842,6 +636,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   Widget sectionCard({
     required String title,
     required List<Widget> children,
+    Widget? trailing,
   }) {
     return Container(
       width: double.infinity,
@@ -851,15 +646,22 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              if (trailing != null) trailing,
+            ],
           ),
           // const SizedBox(height: 15),
           ...children

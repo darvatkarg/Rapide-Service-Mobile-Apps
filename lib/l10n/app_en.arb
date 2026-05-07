@@ -851,6 +851,31 @@
   "parcelRequestSubmittedSuccessfully":"Parcel Request Submitted Successfully",
   "youWillReceiveNotifications":"You will receive notifications at each stage",
   "backToHome":"Back to Home",
-  "saveContinue":"Save & Continue"
+  "saveContinue":"Save & Continue",
+    "billingSummary" : "Billing Summary",
+  
+
+"chargePayBy" : "Charge Pay By",
+"deliveryFee" : "Delivery Fee",
+  
+
+"due" : "Due",
+  
+"generalInfo" : "General Info",
+"noRecordFound" : "No record found",
+"orderDate" : "Order Date",
+"parcelCategory" : "Parcel Category",
+"parcelDeliveryItemms" : "Parcel Delivery Items",
+"parcelType" : "Parcel Type",
+"paymentDetails" : "Payment Details",
+"receiverDetails" : "Receiver Details",
+"senderDetails" : "Sender Details",
+"topUpNow" : "Top Up Now",
+"totalAmount" : "Total Amount",
+"unpaid" :  "Unpaid",
+"walletBalance" : "Wallet Balance",
+"walletHistory" : "Wallet History",
+"orderNumbers" : "Order Number",
+"orderBy" : "Order by"
 
 }

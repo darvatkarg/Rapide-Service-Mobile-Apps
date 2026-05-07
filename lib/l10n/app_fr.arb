@@ -788,5 +788,31 @@
   "parcelRequestSubmittedSuccessfully":"Demande envoyée avec succès",
   "youWillReceiveNotifications":" Vous recevrez des notifications à chaque étape",
   "backToHome":"Retour à l'accueil",
-  "saveContinue":"Enregistrer et continuer"
+  "saveContinue":"Enregistrer et continuer",
+   "billingSummary" : "Résumé de la facturation",
+  
+
+"chargePayBy" : "Frais payés par",
+"deliveryFee" : "Frais de livraison",
+  
+
+"due" : "Dû",
+  
+"generalInfo" : "Informations générales",
+"noRecordFound" : "Aucun enregistrement trouvé",
+"orderDate" : "Date comm",
+"parcelCategory" : "Catégorie d'objet",
+"parcelDeliveryItemms" : "Éléments de livraison",
+"parcelType" : "Type d'objet",
+"paymentDetails" : "Détails du paiement",
+"receiverDetails" : "Détails du destinataire",
+"senderDetails" : "Détails de l'expéditeur",
+"topUpNow" : "Recharger maintenant",
+"totalAmount" : "Montant total",
+"unpaid" : "Impayé",
+"walletBalance" : "Solde du portefeuille",
+"walletHistory" : "Historique du portefeuille",
+"orderNumbers" : "Numéros de commande",
+"order": "Commander",
+"orderBy" : "Commandé par"
 }

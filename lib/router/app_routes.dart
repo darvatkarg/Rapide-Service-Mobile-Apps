@@ -13,6 +13,7 @@ import 'package:hyper_local/screens/auth/view/register_page.dart';
 import 'package:hyper_local/screens/cart_page/view/cart_page.dart';
 import 'package:hyper_local/screens/cart_page/view/promo_code_page.dart';
 import 'package:hyper_local/screens/category_list_page/view/category_list_page.dart';
+import 'package:hyper_local/screens/delivery_zone_list/widgets/delivery_zone_map.dart';
 import 'package:hyper_local/screens/home_page/view/home_page.dart';
 import 'package:hyper_local/screens/introduction_pages/view/introduction_page.dart';
 import 'package:hyper_local/screens/my_orders/view/delivery_tracking_page.dart';
@@ -120,6 +121,7 @@ class AppRoutes {
   static const String deliveryZoneList = '/delivery-zones';
   static const String deliveryZoneDetail = '/delivery-zone-detail';
   static const String notifications = '/notifications';
+  static const String deliveryZoneMap = '/delivery-zone-map';
 }
 
 class MyAppRoute {
@@ -234,6 +236,21 @@ class MyAppRoute {
           name: 'login',
           path: AppRoutes.login,
           pageBuilder: (context, state) => platformPage(LoginPage()),
+        ),
+
+        GoRoute(
+          name: 'delivery-zone-map',
+          path: AppRoutes.deliveryZoneMap,
+          pageBuilder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>;
+            return platformPage(
+              DeliveryZoneMap(
+                rcLat: extra['rc_lat'] as String,
+                rcLong: extra['rc_long'] as String,
+                driverId: extra['driver_id'] as String,
+              ),
+            );
+          },
         ),
         GoRoute(
           name: 'forgot-password',

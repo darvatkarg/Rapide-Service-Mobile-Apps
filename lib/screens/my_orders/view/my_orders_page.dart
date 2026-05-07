@@ -106,7 +106,9 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       child: Row(
                         children: [
                           tabButton(l10n?.runningOrders ?? "Running Orders", 0),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           tabButton(l10n?.historyOrders ?? "History Orders", 1),
                         ],
                       ),
@@ -339,43 +341,84 @@ class OrderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Delivery ID: ${order.pbNumber}",
-                    overflow: TextOverflow.ellipsis,
+                    "#${order.pbNumber}",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+
+                  /// Location
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        size: 18,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          order.rcAddress ?? "No Address",
+                          style: TextStyle(color: Colors.grey.shade600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    "Receiver : ${order.rcName}",
+                   style: TextStyle(color: Colors.grey.shade600),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     DateFormat("dd MMM yyyy, hh:mm a")
                         .format(DateTime.parse(order.createdAt ?? "")),
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 13,
-                    ),
+                     style: TextStyle(color: Colors.grey.shade600),
                   ),
-                  const SizedBox(height: 5),
-                  OutlinedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.delivery_dining,
-                      size: 18,
-                      color: AppTheme.primaryColor,
-                    ),
-                    label: const Text(
-                      "Track Delivery",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppTheme.primaryColor,
-                      side: const BorderSide(color: AppTheme.primaryColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      minimumSize: Size.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                  )
+                  const SizedBox(height: 2),
+
+                     Text(
+                          order.pbStatus ?? "Completed",
+                           style: TextStyle(
+                            color: AppTheme.accentOrange,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+
+                  // OutlinedButton.icon(
+                  //   onPressed: () {
+                  //     GoRouter.of(context).pushNamed(
+                  //       'delivery-zone-map',
+                  //       extra: {
+                  //         'rc_lat': order.rcLat.toString(),
+                  //         'rc_long': order.rcLong.toString(),
+                  //       },
+                  //     );
+                  //   },
+                  //   icon: const Icon(
+                  //     Icons.delivery_dining,
+                  //     size: 18,
+                  //     color: AppTheme.primaryColor,
+                  //   ),
+                  //   label: const Text(
+                  //     "Track Delivery",
+                  //     maxLines: 1,
+                  //     overflow: TextOverflow.ellipsis,
+                  //   ),
+                  //   style: OutlinedButton.styleFrom(
+                  //     foregroundColor: AppTheme.primaryColor,
+                  //     side: const BorderSide(color: AppTheme.primaryColor),
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(8),
+                  //     ),
+                  //     padding: const EdgeInsets.symmetric(
+                  //         horizontal: 10, vertical: 8),
+                  //     minimumSize: Size.zero,
+                  //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -383,27 +426,27 @@ class OrderCard extends StatelessWidget {
             const SizedBox(width: 8),
 
             /// Status Column
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppTheme.primaryColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    order.pbStatus ?? "",
-                    style: const TextStyle(
-                      color: AppTheme.primaryColor,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.end,
+            //   children: [
+            //     Container(
+            //       padding:
+            //           const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            //       decoration: BoxDecoration(
+            //         color: AppTheme.primaryColor.withValues(alpha: 0.1),
+            //         borderRadius: BorderRadius.circular(20),
+            //       ),
+            //       child: Text(
+            //         order.pbStatus ?? "",
+            //         style: const TextStyle(
+            //           color: AppTheme.primaryColor,
+            //           fontWeight: FontWeight.w600,
+            //           fontSize: 12,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

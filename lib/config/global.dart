@@ -217,7 +217,9 @@ class Global {
   static String? get token => _userData?.token;
 
   /// Get language (sync, cached)
-  static String get currentLanguage => _userData?.language ?? 'en';
+  /// 
+  // static String get currentLanguage => _userData?.language ?? 'en';
+  static String get currentLanguage => _userData?.language ?? 'fr';
 
   /// Update language inside UserDataModel
   static Future<void> setLanguage(String languageCode) async {
@@ -251,7 +253,7 @@ class Global {
       // case 'te':
       //   return const Locale('te');
       default:
-        return const Locale('en');
+        return const Locale('fr');
     }
   }
 
