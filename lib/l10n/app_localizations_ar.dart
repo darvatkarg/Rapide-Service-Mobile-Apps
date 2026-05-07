@@ -228,6 +228,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get orders => 'الطلبات';
 
   @override
+  String get parcel => 'Parcels';
+
+  @override
   String get earnings => 'الأرباح';
 
   @override
@@ -361,6 +364,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get myOrders => 'طلباتي';
+
+  @override
+  String get topUpHistory => 'Top Up History';
 
   @override
   String get noOrdersFound => 'لم يتم العثور على طلبات';
@@ -687,6 +693,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pockets => 'الأرباح';
+
+  @override
+  String get parcelDetails => 'Parcel Details';
 
   @override
   String get balance => 'الرصيد';
@@ -2227,4 +2236,65 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pleaseSelectVehicleType => 'يرجى اختيار نوع المركبة';
+
+  @override
+  String get areYouSureYouWantToExitTheApp =>
+      'Are you sure you want to exit the app?';
+
+  @override
+  String get billingSummary => 'Billing Summary';
+
+  @override
+  String get chargePayBy => 'Charge Pay By';
+
+  @override
+  String get deliveryFee => 'Delivery Fee';
+
+  @override
+  String get due => 'Due';
+
+  @override
+  String get generalInfo => 'General Info';
+
+  @override
+  String get noRecordFound => 'No record found';
+
+  @override
+  String get orderDate => 'Order Date';
+
+  @override
+  String get parcelCategory => 'Parcel Category';
+
+  @override
+  String get parcelDeliveryItemms => 'Parcel Delivery Items';
+
+  @override
+  String get parcelType => 'Parcel Type';
+
+  @override
+  String get paymentDetails => 'Payment Details';
+
+  @override
+  String get receiverDetails => 'Receiver Details';
+
+  @override
+  String get senderDetails => 'Sender Details';
+
+  @override
+  String get topUpNow => 'Top Up Now';
+
+  @override
+  String get totalAmount => 'Total Amount';
+
+  @override
+  String get unpaid => 'Unpaid';
+
+  @override
+  String get walletBalance => 'Wallet Balance';
+
+  @override
+  String get walletHistory => 'Wallet History';
+
+  @override
+  String get orderNumbers => 'Order Number';
 }

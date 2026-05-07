@@ -4,13 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalizationService extends ChangeNotifier {
   static const String _languageKey = 'selected_language';
-  static const String _defaultLanguage = 'en';
+  static const String _defaultLanguage = 'fr';
 
   static final LocalizationService _instance = LocalizationService._internal();
   factory LocalizationService() => _instance;
   LocalizationService._internal();
 
-  Locale _currentLocale = const Locale('en');
+  Locale _currentLocale = const Locale('fr');
   Locale get currentLocale => _currentLocale;
 
   static const List<Locale> supportedLocales = [

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hyper_local/screens/dashboard/view/notification_list_page.dart';
+import 'package:hyper_local/screens/delivery_zones/view/delivery_zone_map.dart';
 import 'package:hyper_local/screens/feed_page/view/pickup_order/pickup_order_details_page.dart';
 import 'package:hyper_local/screens/auth/view/login_page.dart';
 import 'package:hyper_local/screens/auth/view/phone_login_page.dart';
@@ -10,6 +11,8 @@ import 'package:hyper_local/screens/auth/view/phone_otp_verification_page.dart';
 import 'package:hyper_local/screens/auth/view/forgot_password_page.dart';
 import 'package:hyper_local/screens/auth/view/register_page.dart';
 import 'package:hyper_local/screens/feed_page/view/home_page.dart';
+import 'package:hyper_local/screens/feed_page/widgets/parcel_history/parcel_history_detail.dart';
+import 'package:hyper_local/screens/feed_page/widgets/top_up_history.dart/order_history_detail.dart';
 import 'package:hyper_local/screens/splash_screen/splash_screen.dart';
 
 import 'package:hyper_local/screens/pockets/view/pockets_page.dart';
@@ -97,6 +100,13 @@ class AppRoutes {
   static const String pickupOrderDetails = '/pickup-order-details';
   static const String deliveryZoneList = '/delivery-zone-list';
   static const String deliveryZoneDetails = '/delivery-zone-details';
+
+  static const String parcelhistoryDetail = '/parcel-history-detail';
+  static const String orderhistoryDetail = '/order-history-detail';
+
+  static const String deliveryZoneMap = '/delivery-zone-map';
+
+  // static const String parcelOrderDetail = '/parcel-order-detail';
 }
 
 class MyAppRoute {
@@ -104,6 +114,41 @@ class MyAppRoute {
     initialLocation: AppRoutes.splashScreen,
 
     routes: [
+      GoRoute(
+        name: 'parcel-history-detail',
+        path: AppRoutes.parcelhistoryDetail,
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return platformPage(
+            ParcelHistoryDetail(id: extra['id']?.toString() ?? ''),
+          );
+        },
+      ),
+
+         GoRoute(
+        name: 'order-history-detail',
+        path: AppRoutes.orderhistoryDetail,
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return platformPage(
+            OrderHistoryDetail(id: extra['id']?.toString() ?? ''),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: 'delivery-zone-map',
+        path: AppRoutes.deliveryZoneMap,
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          return platformPage(
+            DeliveryZoneMap(
+              rcLat: extra['rc_lat'] as String,
+              rcLong: extra['rc_long'] as String,
+            ),
+          );
+        },
+      ),
       GoRoute(
         name: 'splashScreen',
         path: AppRoutes.splashScreen,

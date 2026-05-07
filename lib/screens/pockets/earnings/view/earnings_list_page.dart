@@ -32,7 +32,8 @@ class EarningsListPageWithBloc extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => EarningsBloc(EarningsRepo(), context: context),
-      child: const EarningsListPage(),
+      child:
+       const EarningsListPage(),
     );
   }
 }

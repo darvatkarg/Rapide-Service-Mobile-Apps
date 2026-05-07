@@ -75,6 +75,7 @@
   "dashboard": "Dashboard",
   "home": "Home",
   "orders": "Orders",
+  "parcel": "Parcels",
   "earnings": "Earnings",
   "profile": "Profile",
   "settings": "Settings",
@@ -118,7 +119,8 @@
   "noCoordinatesAvailableForMapView": "No coordinates available for map view",
   "routeDetailsNotAvailableForMapView": "Route details not available for map view",
   "navigationError": "Navigation error: {error}",
-  "myOrders": "Orders",
+  "myOrders": "Order History",
+  "topUpHistory": "Top Up History",
   "noOrdersFound": "No orders found",
   "noOrdersAcceptedYet": "You haven't accepted any orders yet",
   "orderNumber": "Order #{orderId}",
@@ -256,7 +258,8 @@
   "offline": "Offline",
   
   "@@pockets": {},
-  "pockets": "Pockets",
+  "pockets": "My Wallet",
+  "parcelDetails": "Parcel Details",
   "balance": "Balance",
   "withdraw": "Withdraw",
   "withdrawalHistory": "Withdrawal History",
@@ -553,7 +556,7 @@
   "errorLoadingProfile": "Error Loading Profile",
   "retry": "Retry",
   "settings": "Settings",
-  "accountSettings": "Account Settings",
+  "accountSettings": "Accounting",
   "manageProfileInformation": "Manage your profile information",
   "appSettings": "App Settings",
   "notifications": "Notifications",
@@ -1014,7 +1017,7 @@
   "@@availableOrders": {},
   "refreshing": "Refreshing...",
   "accountInactive": "Account Inactive",
-  "activateAccountToViewOrders": "You need to activate your account to view and accept available orders",
+  "activateAccountToViewOrders": "Activate your account to start receiving new orders and parcels.",
   "activateAccount": "Activate Account",
   "tapPowerButtonToGoOnline": "Tap the power button in the header to go online",
   
@@ -1024,7 +1027,7 @@
 
   "documentLbl": "document",
   "pickupOrders": "Pickup Orders",
-  "availPickupOrders": "Parcels",
+  "availPickupOrders": "Parcel History",
   "noReturnOrdersAvailable": "No Pickup Orders Available",
   "activateAccountToViewPickupOrders": "You need to activate your account to view and accept pickup orders",
   "noPickupOrders": "No Pickup Orders",
@@ -1107,7 +1110,7 @@
   "weekN": "Week {weekNumber}",
 
     "feed": "history",
-    "pockets": "Earnings",
+  
     "settings": "Settings",
     "chooseYourPreferredLanguage": "Choose your preferred language",
     "noAssignedOrdersYet": "No assigned orders yet",
@@ -1122,5 +1125,32 @@
   "dataWillAppearHere": "Your information will appear here soon",
   "pullToRefresh": "Pull to refresh",
   "selectVehicleType": "Select Vehicle Type",
-  "pleaseSelectVehicleType": "Please select vehicle type"
+  "pleaseSelectVehicleType": "Please select vehicle type",
+  "areYouSureYouWantToExitTheApp" : "Are you sure you want to exit the app?",
+  
+
+  "billingSummary" : "Billing Summary",
+  
+
+"chargePayBy" : "Charge Pay By",
+"deliveryFee" : "Delivery Fee",
+  
+
+"due" : "Due",
+  
+"generalInfo" : "General Info",
+"noRecordFound" : "No record found",
+"orderDate" : "Order Date",
+"parcelCategory" : "Parcel Category",
+"parcelDeliveryItemms" : "Parcel Delivery Items",
+"parcelType" : "Parcel Type",
+"paymentDetails" : "Payment Details",
+"receiverDetails" : "Receiver Details",
+"senderDetails" : "Sender Details",
+"topUpNow" : "Top Up Now",
+"totalAmount" : "Total Amount",
+"unpaid" :  "Unpaid",
+"walletBalance" : "Wallet Balance",
+"walletHistory" : "Wallet History",
+"orderNumbers" : "Order Number"
 }

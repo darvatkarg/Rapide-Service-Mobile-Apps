@@ -16,16 +16,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="remove"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:node="remove"/>
 
+
     <application
         android:label="Rapide Service Driver"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true">
 
-        <!-- Google Maps API -->
+        <!-- Google Maps API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_ACTUAL_API_KEY_HERE"/>
+            android:value="AIzaSyA4oGQUNXH-ydb1VcqsHEU4lLJ_kpmZ_us"/>
 
         <activity
             android:name=".MainActivity"

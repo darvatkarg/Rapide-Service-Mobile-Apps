@@ -28,7 +28,6 @@ class MyOrdersRepo {
         body["page"] = page;
       }
 
-
       final response = await ApiBaseHelper.getApi(
         url: myOrdersApi,
         useAuthToken: true,
@@ -36,7 +35,36 @@ class MyOrdersRepo {
       );
       return response;
     } catch (error) {
+      throw Exception('Error occurred');
+    }
+  }
 
+  Future<Map<String, dynamic>> myOngoingParcelsList() async {
+    try {
+      Map<String, dynamic> body = {};
+
+      final response = await ApiBaseHelper.getApi(
+        url: ongoingParcelsApi,
+        useAuthToken: true,
+        params: body,
+      );
+      return response;
+    } catch (error) {
+      throw Exception('Error occurred');
+    }
+  }
+
+  Future<Map<String, dynamic>> myHistoryParcelsList() async {
+    try {
+      Map<String, dynamic> body = {};
+
+      final response = await ApiBaseHelper.getApi(
+        url: historyParcelsApi,
+        useAuthToken: true,
+        params: body,
+      );
+      return response;
+    } catch (error) {
       throw Exception('Error occurred');
     }
   }
@@ -58,9 +86,7 @@ class MyOrdersRepo {
         // Convert offset to page number (offset 0 = page 1, offset 10 = page 2, etc.)
         int page = (offset ~/ (limit ?? 10)) + 1;
         body["page"] = page;
-
       }
-
 
       final response = await ApiBaseHelper.getApi(
         url: myOrdersApi,
@@ -69,7 +95,6 @@ class MyOrdersRepo {
       );
       return response;
     } catch (error) {
-
       throw Exception('Error occurred');
     }
   }

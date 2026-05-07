@@ -18,3 +18,10 @@ class LoadMoreEarnings extends EarningsEvent {
   final String? dateRange;
   LoadMoreEarnings({this.dateRange});
 }
+
+class TopUpHistory extends EarningsEvent {
+  final int? page;
+  final int? perPage;
+
+  TopUpHistory({this.page, this.perPage});
+}

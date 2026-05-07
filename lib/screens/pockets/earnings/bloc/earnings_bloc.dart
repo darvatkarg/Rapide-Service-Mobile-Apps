@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:hyper_local/screens/pockets/earnings/model/top_up_history_model.dart';
 import '../repo/earnings_repo.dart';
 import 'earnings_event.dart';
 import 'earnings_state.dart';
@@ -19,6 +22,8 @@ class EarningsBloc extends Bloc<EarningsEvent, EarningsState> {
     on<FetchMonthlyEarnings>(_onFetchMonthlyEarnings);
     on<FetchYearlyEarnings>(_onFetchYearlyEarnings);
     on<LoadMoreEarnings>(_onLoadMoreEarnings);
+
+    on<TopUpHistory>(_onTopUpHistory);
   }
 
   Future<void> _onFetchEarnings(
@@ -140,19 +145,11 @@ class EarningsBloc extends Bloc<EarningsEvent, EarningsState> {
     Emitter<EarningsState> emit,
   ) async {
     try {
-
       emit(EarningsLoading());
       final response = await _earningsRepo.getEarningsStats();
 
-
-
-
-
-
-
       // Check if this is a 403 response
       if (GlobalErrorHandler.is403Response(response)) {
-
         final apiMessage = GlobalErrorHandler.get403Message(response);
 
         if (context != null) {
@@ -172,27 +169,17 @@ class EarningsBloc extends Bloc<EarningsEvent, EarningsState> {
 
       // Handle normal response
       if (response['success'] == true && response['data'] != null) {
-
         final earningsStatsResponse = response['data'] as EarningsStatsResponse;
         emit(EarningsStatsLoaded(earningsStatsResponse));
       } else {
-
         emit(EarningsError('Failed to load earnings statistics'));
       }
     } catch (error) {
-
-
-
-
-
       // Check if this is a 403 error
       if (GlobalErrorHandler.is403Error(error)) {
-
-
         emit(EarningsInactive('Your account is currently inactive'));
         return;
       }
-
 
       emit(EarningsError(error.toString()));
     }
@@ -342,6 +329,43 @@ class EarningsBloc extends Bloc<EarningsEvent, EarningsState> {
       }
     } catch (error) {
       emit(EarningsError(error.toString()));
+    }
+  }
+
+  FutureOr<void> _onTopUpHistory(
+    TopUpHistory event,
+    Emitter<EarningsState> emit,
+  ) async {
+    try {
+      emit(TopUpHistoryLoading());
+
+      final response = await _earningsRepo.getTopUpHistory(
+        page: event.page,
+        perPage: event.perPage,
+      );
+
+      print("API FULL RESPONSE: $response");
+
+      if (response['statusCode'] == 403) {
+        emit(EarningsError(response['message'] ?? 'Access forbidden'));
+        return;
+      }
+
+      if (response['success'] != true) {
+        emit(EarningsError(response['message'] ?? 'Something went wrong'));
+        return;
+      }
+
+      final TopUpHistoryResponse parsed = response['data'];
+
+      final list = parsed.data.transactions;
+
+      print("TOTAL ITEMS: ${list.length}");
+
+      emit(MyHistoryTopUpsLoaded(historyTopUps: list));
+    } catch (error) {
+      print("FETCH ERROR: $error");
+      emit(EarningsError('Failed to load top-up history: $error'));
     }
   }
 }

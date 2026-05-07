@@ -234,6 +234,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get orders => 'Commandes';
 
   @override
+  String get parcel => 'Colis';
+
+  @override
   String get earnings => 'Gains';
 
   @override
@@ -367,7 +370,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get myOrders => 'commandes';
+  String get myOrders => 'Historique des commandes';
+
+  @override
+  String get topUpHistory => 'Historique des recharges';
 
   @override
   String get noOrdersFound => 'Aucune commande trouvée';
@@ -701,7 +707,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get offline => 'Hors ligne';
 
   @override
-  String get pockets => 'Gains';
+  String get pockets => 'Mon portefeuille';
+
+  @override
+  String get parcelDetails => 'Détails du colis';
 
   @override
   String get balance => 'Solde';
@@ -1249,7 +1258,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get verified => 'Vérifié';
 
   @override
-  String get accountSettings => 'Paramètres du compte';
+  String get accountSettings => 'Comptabilité';
 
   @override
   String get manageProfileInformation => 'Gérer vos informations de profil';
@@ -1630,7 +1639,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get all => 'All';
 
   @override
-  String get order => 'Order';
+  String get order => 'Commander';
 
   @override
   String get pleaseEnterOtpFromCustomerForDelivery =>
@@ -2096,7 +2105,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get activateAccountToViewOrders =>
-      'Vous devez activer votre compte pour voir et accepter les commandes disponibles';
+      'Activez votre compte pour recevoir vos commandes.';
 
   @override
   String get activateAccount => 'Activer le compte';
@@ -2116,7 +2125,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pickupOrders => 'Commandes de ramassage';
 
   @override
-  String get availPickupOrders => 'Colis';
+  String get availPickupOrders => 'Historique des colis';
 
   @override
   String get noReturnOrdersAvailable =>
@@ -2271,4 +2280,65 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get pleaseSelectVehicleType =>
       'Veuillez sélectionner le type de véhicule';
+
+  @override
+  String get areYouSureYouWantToExitTheApp =>
+      'Êtes-vous sûr de vouloir quitter l\'application ?';
+
+  @override
+  String get billingSummary => 'Résumé de la facturation';
+
+  @override
+  String get chargePayBy => 'Frais payés par';
+
+  @override
+  String get deliveryFee => 'Frais de livraison';
+
+  @override
+  String get due => 'Dû';
+
+  @override
+  String get generalInfo => 'Informations générales';
+
+  @override
+  String get noRecordFound => 'Aucun enregistrement trouvé';
+
+  @override
+  String get orderDate => 'Date de la commande';
+
+  @override
+  String get parcelCategory => 'Catégorie d\'objet';
+
+  @override
+  String get parcelDeliveryItemms => 'Éléments de livraison';
+
+  @override
+  String get parcelType => 'Type d\'objet';
+
+  @override
+  String get paymentDetails => 'Détails du paiement';
+
+  @override
+  String get receiverDetails => 'Détails du destinataire';
+
+  @override
+  String get senderDetails => 'Détails de l\'expéditeur';
+
+  @override
+  String get topUpNow => 'Recharger maintenant';
+
+  @override
+  String get totalAmount => 'Montant total';
+
+  @override
+  String get unpaid => 'Impayé';
+
+  @override
+  String get walletBalance => 'Solde du portefeuille';
+
+  @override
+  String get walletHistory => 'Historique du portefeuille';
+
+  @override
+  String get orderNumbers => 'Numéros de commande';
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hyper_local/config/global.dart';
 import 'package:hyper_local/screens/auth/repo/auth_repo.dart';
@@ -21,9 +22,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       );
       if (response['success'] == true) {
-        final token = response['data']['access_token'].toString();
-
+        final data = response['data'];
+        final token = data['access_token'].toString();
+        final driverId = data['delivery_boy']['id'].toString();
+        // final token = response['data']['access_token'].toString();
+        debugPrint("✅ LOGIN SUCCESS");
+        debugPrint("🔑 TOKEN: $token");
+        debugPrint("🆔 DRIVER ID FROM API: $driverId");
         await Global.setUserToken(token);
+        await Global.setDriverId(driverId);
+        String? storedDriverId = await Global.getDriverId();
+
+        debugPrint("📦 DRIVER ID STORED IN HIVE: $storedDriverId");
 
         emit(AuthSuccess(message: response['message']));
       } else {
@@ -40,9 +50,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(AuthLoading());
     try {
-      
-
-
       // Map<String, dynamic> response = {};
       final response = await AuthRepository().register(
         name: event.name,

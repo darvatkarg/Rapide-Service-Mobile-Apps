@@ -228,6 +228,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orders => 'Orders';
 
   @override
+  String get parcel => 'Parcels';
+
+  @override
   String get earnings => 'Earnings';
 
   @override
@@ -360,7 +363,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get myOrders => 'Orders';
+  String get myOrders => 'Order History';
+
+  @override
+  String get topUpHistory => 'Top Up History';
 
   @override
   String get noOrdersFound => 'No Orders Found';
@@ -688,7 +694,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get offline => 'Offline';
 
   @override
-  String get pockets => 'Earnings';
+  String get pockets => 'My Wallet';
+
+  @override
+  String get parcelDetails => 'Parcel Details';
 
   @override
   String get balance => 'Balance';
@@ -1229,7 +1238,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verified => 'Verified';
 
   @override
-  String get accountSettings => 'Account Settings';
+  String get accountSettings => 'Accounting';
 
   @override
   String get manageProfileInformation => 'Manage your profile information';
@@ -2066,7 +2075,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get activateAccountToViewOrders =>
-      'You need to activate your account to view and accept available orders';
+      'Activate your account to start receiving new orders and parcels.';
 
   @override
   String get activateAccount => 'Activate Account';
@@ -2086,7 +2095,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pickupOrders => 'Pickup Orders';
 
   @override
-  String get availPickupOrders => 'Parcels';
+  String get availPickupOrders => 'Parcel History';
 
   @override
   String get noReturnOrdersAvailable => 'No Pickup Orders Available';
@@ -2239,4 +2248,65 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseSelectVehicleType => 'Please select vehicle type';
+
+  @override
+  String get areYouSureYouWantToExitTheApp =>
+      'Are you sure you want to exit the app?';
+
+  @override
+  String get billingSummary => 'Billing Summary';
+
+  @override
+  String get chargePayBy => 'Charge Pay By';
+
+  @override
+  String get deliveryFee => 'Delivery Fee';
+
+  @override
+  String get due => 'Due';
+
+  @override
+  String get generalInfo => 'General Info';
+
+  @override
+  String get noRecordFound => 'No record found';
+
+  @override
+  String get orderDate => 'Order Date';
+
+  @override
+  String get parcelCategory => 'Parcel Category';
+
+  @override
+  String get parcelDeliveryItemms => 'Parcel Delivery Items';
+
+  @override
+  String get parcelType => 'Parcel Type';
+
+  @override
+  String get paymentDetails => 'Payment Details';
+
+  @override
+  String get receiverDetails => 'Receiver Details';
+
+  @override
+  String get senderDetails => 'Sender Details';
+
+  @override
+  String get topUpNow => 'Top Up Now';
+
+  @override
+  String get totalAmount => 'Total Amount';
+
+  @override
+  String get unpaid => 'Unpaid';
+
+  @override
+  String get walletBalance => 'Wallet Balance';
+
+  @override
+  String get walletHistory => 'Wallet History';
+
+  @override
+  String get orderNumbers => 'Order Number';
 }

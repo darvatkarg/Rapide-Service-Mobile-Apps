@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           log('State $state');
 
           if (state is AuthSuccess) {
-            ToastManager.show(context: context, message: state.message);
+            // ToastManager.show(context: context, message: state.message);
             GoRouter.of(context).push(AppRoutes.dashboard);
           } else if (state is AuthFailure) {
             ToastManager.show(context: context, message: state.error);

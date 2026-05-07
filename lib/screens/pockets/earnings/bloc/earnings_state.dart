@@ -1,3 +1,5 @@
+import 'package:hyper_local/screens/pockets/earnings/model/top_up_history_model.dart';
+
 import '../model/earnings_model.dart';
 
 abstract class EarningsState {}
@@ -56,4 +58,15 @@ class EarningsError extends EarningsState {
   final String message;
 
   EarningsError(this.message);
+}
+
+class TopUpHistoryLoading extends EarningsState {}
+
+class MyHistoryTopUpsLoaded extends EarningsState {
+  final List<TopUpHistoryModel> historyTopUps;
+
+  MyHistoryTopUpsLoaded({required this.historyTopUps});
+
+  @override
+  List<Object> get props => [historyTopUps];
 }

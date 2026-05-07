@@ -15,6 +15,7 @@ class ProfileRepo {
         useAuthToken: true,
         params: {},
       );
+      print('profile response ######$response');
 
       if (response['success'] == true && response['data'] != null) {
         return ProfileModel.fromJson(response['data']);

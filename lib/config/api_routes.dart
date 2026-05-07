@@ -7,10 +7,14 @@ String deliveryBoyStatusApi = '${baseUrl}status/update';
 String deliveryBoyProfileApi = '${baseUrl}profile';
 String availableOrdersStatusApi = '${baseUrl}orders/available';
 String myOrdersApi = '${baseUrl}orders/my';
+String ongoingParcelsApi = '${baseUrl}parcels/ongoing';
+String historyParcelsApi = '${baseUrl}parcels/history';
 String acceptOrderApi = '${baseUrl}orders';
 String updateCurrentLocationApi = '${baseUrl}update-current-location';
 String itemsCollectedApi = '${baseUrl}order-items';
 String orderDetailsApi = '${baseUrl}orders';
+String parcelDetailsApi = '${baseUrl}parcels';
+
 String getReturnOrdersApi = '${baseUrl}return-pickups/available';
 String acceptReturnOrderApi = '${baseUrl}return-pickups/';
 String updateReturnOrderApi = '${baseUrl}return-pickups/';
@@ -24,6 +28,8 @@ String getSystemSettingApi = '${deliveryZoneUrl}settings';
 String getDeliveryBoySettingsApi = '${deliveryZoneUrl}settings';
 
 String getEarningsApi = '${baseUrl}earnings';
+
+String getTopUpHistoryApi = '${baseUrl}topup-history';
 String getEarningsStatsApi = '${baseUrl}earnings/statistics';
 String getEarningsDateRangeApi = '${baseUrl}earnings';
 

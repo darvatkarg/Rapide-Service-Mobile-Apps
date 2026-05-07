@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hyper_local/screens/feed_page/model/available_parcels_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'order_details_event.dart';
 import 'order_details_state.dart';
@@ -14,6 +17,9 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
 
   OrderDetailsBloc(this._orderDetailsRepo) : super(OrderDetailsInitial()) {
     on<FetchOrderDetails>(_onFetchOrderDetails);
+    on<FetchParcelDetails>(_onFetchParcelDetails);
+    on<ChangeParcelStatus>(_onChangeParcelStatus);
+    on<ChangeOrderStatus>(_onChangeOrderStatus);
     on<MarkItemReachedDestination>(_onMarkItemReachedDestination);
     _initializePrefs();
   }
@@ -36,7 +42,6 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
     await _initializePrefs();
     final storageKey = _getStorageKey(orderId, itemId);
     await _prefs!.setBool(storageKey, status);
-
   }
 
   // Helper method to get reachedDestination status
@@ -52,20 +57,15 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
     FetchOrderDetails event,
     Emitter<OrderDetailsState> emit,
   ) async {
-
-
     emit(OrderDetailsLoading());
     try {
       final response = await _orderDetailsRepo.getOrderDetails(event.orderId);
 
       if (response['success'] == true && response['data'] != null) {
-
         final order = Orders.fromJson(response['data']['order']);
-
 
         // Restore reachedDestination status from SharedPreferences
         if (order.items != null) {
-
           final updatedItems = await Future.wait(
             order.items!.map((item) async {
               if (item.id != null) {
@@ -75,7 +75,6 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
                 );
 
                 if (savedStatus == true) {
-
                   return item.copyWith(reachedDestination: true);
                 }
               }
@@ -104,8 +103,6 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
     MarkItemReachedDestination event,
     Emitter<OrderDetailsState> emit,
   ) async {
-
-
     // Get current state
     final currentState = state;
     if (currentState is OrderDetailsSuccess) {
@@ -115,7 +112,6 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
       final updatedItems =
           currentOrder.items?.map((item) {
             if (item.id == event.itemId) {
-
               return item.copyWith(reachedDestination: true);
             }
             return item;
@@ -128,10 +124,145 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
         // Create updated order with modified items
         final updatedOrder = currentOrder.copyWith(items: updatedItems);
         emit(OrderDetailsSuccess(updatedOrder));
-
       }
     } else {
-//
+      //
+    }
+  }
+
+  FutureOr<void> _onFetchParcelDetails(
+    FetchParcelDetails event,
+    Emitter<OrderDetailsState> emit,
+  ) async {
+    emit(ParcelDetailsLoading());
+
+    try {
+      final response = await _orderDetailsRepo.getParcelDetails(event.pbId);
+
+      print("🔥 FULL RESPONSE: $response");
+
+      if (response['success'] == true && response['data'] != null) {
+        final parcelJson = response['data']['parcel'];
+
+        print("PARCEL JSON: $parcelJson");
+
+        final parcel = Parcel.fromJson(parcelJson);
+
+        emit(ParcelDetailsSuccess(parcel));
+      } else {
+        emit(
+          OrderDetailsError(
+            response['message'] ?? 'Failed to fetch parcel details',
+          ),
+        );
+      }
+    } catch (error) {
+      print("ERROR: $error");
+      emit(OrderDetailsError(error.toString()));
+    }
+  }
+
+  FutureOr<void> _onChangeParcelStatus(
+    ChangeParcelStatus event,
+    Emitter<OrderDetailsState> emit,
+  ) async {
+    emit(ParcelDetailsLoading()); // optional (see note below)
+
+    try {
+      final response = await _orderDetailsRepo.changeParcelStatus(
+        pbId: event.pbId,
+        status: event.status,
+      );
+
+      print("🔥 CHANGE STATUS RESPONSE: $response");
+
+      if (response['success'] == true) {
+        emit(
+          ParcelStatusUpdated(
+            response['message'] ?? "Parcel status updated successfully",
+          ),
+        );
+      } else {
+        emit(
+          OrderDetailsError(
+            response['message'] ?? 'Failed to change parcel status',
+          ),
+        );
+      }
+    } catch (error) {
+      print("ERROR: $error");
+      emit(OrderDetailsError(error.toString()));
+    }
+  }
+
+  // FutureOr<void> _onChangeParcelStatus(
+  //   ChangeParcelStatus event,
+  //   Emitter<OrderDetailsState> emit,
+  // ) async {
+  //   emit(ParcelDetailsLoading());
+
+  //   try {
+  //     final response = await _orderDetailsRepo.changeParcelStatus(
+  //       pbId: event.pbId,
+  //       status: event.status,
+  //     );
+
+  //     print("🔥 CHANGE STATUS RESPONSE: $response");
+
+  //     if (response['success'] == true && response['data'] != null) {
+  //       final dataList = response['data'];
+
+  //       if (dataList is List && dataList.isNotEmpty) {
+  //         final parcelJson = dataList[0];
+  //         final updatedParcel = Parcel.fromJson(parcelJson);
+
+  //         emit(ParcelDetailsSuccess(updatedParcel));
+  //       } else {
+  //         emit(OrderDetailsError("Invalid data format"));
+  //       }
+  //     } else {
+  //       emit(
+  //         OrderDetailsError(
+  //           response['message'] ?? 'Failed to change parcel status',
+  //         ),
+  //       );
+  //     }
+  //   } catch (error) {
+  //     print("ERROR: $error");
+  //     emit(OrderDetailsError(error.toString()));
+  //   }
+  // }
+
+  FutureOr<void> _onChangeOrderStatus(
+    ChangeOrderStatus event,
+    Emitter<OrderDetailsState> emit,
+  ) async {
+    emit(OrderDetailsLoading());
+
+    try {
+      final response = await _orderDetailsRepo.changeOrderStatus(
+        id: event.id,
+        status: event.status,
+      );
+
+      print("🔥 CHANGE STATUS RESPONSE: $response");
+
+      if (response['success'] == true) {
+        emit(
+          OrderStatusUpdated(
+            response['message'] ?? "Order status updated successfully",
+          ),
+        );
+      } else {
+        emit(
+          OrderDetailsError(
+            response['message'] ?? 'Failed to change parcel status',
+          ),
+        );
+      }
+    } catch (error) {
+      print("ERROR: $error");
+      emit(OrderDetailsError(error.toString()));
     }
   }
 }

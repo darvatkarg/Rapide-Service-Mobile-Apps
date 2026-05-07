@@ -1,9 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hyper_local/screens/feed_page/bloc/available_orders_bloc/available_orders_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/available_orders_bloc/available_orders_event.dart';
+import 'package:hyper_local/screens/inactive_delievryboy/view/tab_bar_content.dart';
+import 'package:hyper_local/screens/inactive_delievryboy/view/tap_bar.dart';
+import 'package:hyper_local/utils/widgets/connectivity_mixin.dart';
 import 'package:hyper_local/utils/widgets/empty_state_widget.dart';
 import 'package:hyper_local/utils/widgets/loading_widget.dart';
 import '../../../l10n/app_localizations.dart';
@@ -30,13 +37,33 @@ class StatisticsPage extends StatefulWidget {
   State<StatisticsPage> createState() => _StatisticsPageState();
 }
 
-class _StatisticsPageState extends State<StatisticsPage> {
+class _StatisticsPageState extends State<StatisticsPage>
+    with
+        SingleTickerProviderStateMixin,
+        WidgetsBindingObserver,
+        ConnectivityMixin {
   String _selectedChartPeriod = 'Week'; // Default value
   bool _isLocalized = false;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController.addListener(() {
+      setState(() {}); // Rebuild to update icon colors only
+
+      // Refresh orders when switching tabs
+      // if (_tabController.index == 0) {
+      //     context.read<MyOrdersBloc>().add(AllMyOrdersList());
+      //   // Available Orders tab - can refresh available but typically not needed strictly on switch
+      //   // Just let it load if initial
+      // } else if (_tabController.index == 1) {
+      //   // My Orders tab - remove forceRefresh so it uses cached data or loads normally
+      //   // context.read<MyOrdersBloc>().add(AllMyOrdersList());
+      // }
+    });
   }
 
   @override
@@ -50,7 +77,16 @@ class _StatisticsPageState extends State<StatisticsPage> {
     // Sync with current delivery boy status when page becomes visible
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DeliveryBoyStatusBloc>().add(CheckApiStatus());
+      context.read<AvailableOrdersBloc>().add(
+        AllAvailableOrdersList(forceRefresh: true),
+      );
     });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -80,7 +116,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     listener: (context, state) {
                       // Handle status changes and sync with current state
                       if (state is DeliveryBoyStatusLoaded) {
-                        // Status is loaded, no action needed
+                        // setState(() {
+                        //   _isDeliveryBoyActive = state.isOnline;
+                        // });
                       } else if (state is DeliveryBoyStatusError) {}
                     },
                     child: BlocBuilder<
@@ -127,9 +165,13 @@ class _StatisticsPageState extends State<StatisticsPage> {
                           if (homeStatsState is HomeStatsLoading) {
                             return const Center(child: LoadingWidget());
                           } else if (homeStatsState is HomeStatsError) {
-                            return EmptyStateWidget.noData(onRetry: (){
-                              context.read<HomeStatsBloc>().add(FetchHomeStats());
-                            });
+                            return EmptyStateWidget.noData(
+                              onRetry: () {
+                                context.read<HomeStatsBloc>().add(
+                                  FetchHomeStats(),
+                                );
+                              },
+                            );
                           } else if (homeStatsState is HomeStatsLoaded) {
                             return _buildHomeStatsContent(
                               homeStatsState.response,
@@ -160,35 +202,46 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   Widget _buildHomeStatsContent(HomeStatsResponse response) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 5.w),
-      child: Column(
-        children: [
-          // Profile Card
-          _buildProfileCard(response),
-          SizedBox(height: 16.h),
+    return Column(
+      children: [
+        // Profile Card
+        // _buildProfileCard(response),
+        // SizedBox(height: 16.h),
 
-          // Summary Cards
-          _buildSummaryCards(response),
-          SizedBox(height: 16.h),
+        // Summary Cards
+        _buildSummaryCards(response),
 
-          // Performance Metrics
-          _buildPerformanceMetrics(response),
-          SizedBox(height: 16.h),
+        // SizedBox(height: 16.h),
 
-          // Today Progress
-          _buildTodayProgress(response),
-          SizedBox(height: 16.h),
+        // Performance Metrics
+        // _buildPerformanceMetrics(response),
+        // SizedBox(height: 16.h),
 
-          // Earnings Analytics
-          _buildEarningsAnalytics(response),
-          SizedBox(height: 20.h),
+        // // Today Progress
+        // _buildTodayProgress(response),
+        // SizedBox(height: 16.h),
 
-          // Quick Actions
-          _buildQuickActions(),
-          // SizedBox(height: 100.h),
-        ],
-      ),
+        // // Earnings Analytics
+        // _buildEarningsAnalytics(response),
+        // SizedBox(height: 20.h),
+
+        // Quick Actions
+        // _buildQuickActions(),
+        TabBarSection(tabController: _tabController),
+        SizedBox(height: 10.h),
+        BlocBuilder<DeliveryBoyStatusBloc, DeliveryBoyStatusState>(
+          builder: (context, state) {
+            final isActive =
+                state is DeliveryBoyStatusLoaded ? state.isOnline : false;
+
+            return TabContentSection(
+              tabController: _tabController,
+              isDeliveryBoyActive: isActive,
+            );
+          },
+        ),
+        // SizedBox(height: 100.h),
+      ],
     );
   }
 
@@ -300,12 +353,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(
-          text: AppLocalizations.of(context)!.earningsAnalytics,
-          fontSize: 18.sp,
-          fontWeight: FontWeight.bold,
-        ),
-        SizedBox(height: 16.h),
+        // CustomText(
+        //   text: AppLocalizations.of(context)!.earningsAnalytics,
+        //   fontSize: 18.sp,
+        //   fontWeight: FontWeight.bold,
+        // ),
+        // SizedBox(height: 16.h),
         Row(
           children: [
             Expanded(
@@ -333,7 +386,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
             ),
           ],
         ),
-        SizedBox(height: 8.h),
+        // SizedBox(height: 8.h),
         Row(
           children: [
             Expanded(
@@ -726,7 +779,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 getTitlesWidget: (double value, TitleMeta meta) {
                   if (value == 0) return const Text('');
                   return CustomText(
-                    text: '${settingsData.currencySymbol}${(value / 1000).toStringAsFixed(0)}K',
+                    text:
+                        '${settingsData.currencySymbol}${(value / 1000).toStringAsFixed(0)}K',
                     fontSize: 10,
                     color: Theme.of(
                       context,
@@ -823,11 +877,17 @@ class _StatisticsPageState extends State<StatisticsPage> {
             decoration: BoxDecoration(
               color: AppColors.primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.primaryColor.withValues(alpha: 0.3)),
+              border: Border.all(
+                color: AppColors.primaryColor.withValues(alpha: 0.3),
+              ),
             ),
             child: Row(
               children: [
-                Icon(TablerIcons.moneybag, color: AppColors.primaryColor, size: 16),
+                Icon(
+                  TablerIcons.moneybag,
+                  color: AppColors.primaryColor,
+                  size: 16,
+                ),
                 SizedBox(width: 8.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -862,11 +922,17 @@ class _StatisticsPageState extends State<StatisticsPage> {
             decoration: BoxDecoration(
               color: AppColors.primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.primaryColor.withValues(alpha: 0.3)),
+              border: Border.all(
+                color: AppColors.primaryColor.withValues(alpha: 0.3),
+              ),
             ),
             child: Row(
               children: [
-                Icon(Icons.trending_up, color: AppColors.primaryColor, size: 16),
+                Icon(
+                  Icons.trending_up,
+                  color: AppColors.primaryColor,
+                  size: 16,
+                ),
                 SizedBox(width: 8.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -920,7 +986,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     padding: EdgeInsets.symmetric(vertical: 10.h),
                     margin: EdgeInsets.symmetric(horizontal: 2),
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.primaryColor : Colors.transparent,
+                      color:
+                          isSelected
+                              ? AppColors.primaryColor
+                              : Colors.transparent,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(

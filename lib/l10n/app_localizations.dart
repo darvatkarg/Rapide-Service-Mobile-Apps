@@ -520,6 +520,12 @@ abstract class AppLocalizations {
   /// **'Orders'**
   String get orders;
 
+  /// No description provided for @parcel.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcels'**
+  String get parcel;
+
   /// No description provided for @earnings.
   ///
   /// In en, this message translates to:
@@ -763,8 +769,14 @@ abstract class AppLocalizations {
   /// No description provided for @myOrders.
   ///
   /// In en, this message translates to:
-  /// **'Orders'**
+  /// **'Order History'**
   String get myOrders;
+
+  /// No description provided for @topUpHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Up History'**
+  String get topUpHistory;
 
   /// No description provided for @noOrdersFound.
   ///
@@ -1399,8 +1411,14 @@ abstract class AppLocalizations {
   /// No description provided for @pockets.
   ///
   /// In en, this message translates to:
-  /// **'Earnings'**
+  /// **'My Wallet'**
   String get pockets;
+
+  /// No description provided for @parcelDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel Details'**
+  String get parcelDetails;
 
   /// No description provided for @balance.
   ///
@@ -2413,7 +2431,7 @@ abstract class AppLocalizations {
   /// No description provided for @accountSettings.
   ///
   /// In en, this message translates to:
-  /// **'Account Settings'**
+  /// **'Accounting'**
   String get accountSettings;
 
   /// No description provided for @manageProfileInformation.
@@ -3967,7 +3985,7 @@ abstract class AppLocalizations {
   /// No description provided for @activateAccountToViewOrders.
   ///
   /// In en, this message translates to:
-  /// **'You need to activate your account to view and accept available orders'**
+  /// **'Activate your account to start receiving new orders and parcels.'**
   String get activateAccountToViewOrders;
 
   /// No description provided for @activateAccount.
@@ -4003,7 +4021,7 @@ abstract class AppLocalizations {
   /// No description provided for @availPickupOrders.
   ///
   /// In en, this message translates to:
-  /// **'Parcels'**
+  /// **'Parcel History'**
   String get availPickupOrders;
 
   /// No description provided for @noReturnOrdersAvailable.
@@ -4299,6 +4317,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select vehicle type'**
   String get pleaseSelectVehicleType;
+
+  /// No description provided for @areYouSureYouWantToExitTheApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to exit the app?'**
+  String get areYouSureYouWantToExitTheApp;
+
+  /// No description provided for @billingSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Summary'**
+  String get billingSummary;
+
+  /// No description provided for @chargePayBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Charge Pay By'**
+  String get chargePayBy;
+
+  /// No description provided for @deliveryFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Fee'**
+  String get deliveryFee;
+
+  /// No description provided for @due.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get due;
+
+  /// No description provided for @generalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'General Info'**
+  String get generalInfo;
+
+  /// No description provided for @noRecordFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No record found'**
+  String get noRecordFound;
+
+  /// No description provided for @orderDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Date'**
+  String get orderDate;
+
+  /// No description provided for @parcelCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel Category'**
+  String get parcelCategory;
+
+  /// No description provided for @parcelDeliveryItemms.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel Delivery Items'**
+  String get parcelDeliveryItemms;
+
+  /// No description provided for @parcelType.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel Type'**
+  String get parcelType;
+
+  /// No description provided for @paymentDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Details'**
+  String get paymentDetails;
+
+  /// No description provided for @receiverDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Receiver Details'**
+  String get receiverDetails;
+
+  /// No description provided for @senderDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Sender Details'**
+  String get senderDetails;
+
+  /// No description provided for @topUpNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Up Now'**
+  String get topUpNow;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Amount'**
+  String get totalAmount;
+
+  /// No description provided for @unpaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get unpaid;
+
+  /// No description provided for @walletBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet Balance'**
+  String get walletBalance;
+
+  /// No description provided for @walletHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet History'**
+  String get walletHistory;
+
+  /// No description provided for @orderNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Number'**
+  String get orderNumbers;
 }
 
 class _AppLocalizationsDelegate

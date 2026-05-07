@@ -16,6 +16,20 @@ class AllMyOrdersList extends MyOrdersEvent {
   List<Object?> get props => [type, typeId, forceRefresh];
 }
 
+class AvailableParcelsList extends MyOrdersEvent {
+  AvailableParcelsList();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class HistoryParcelsList extends MyOrdersEvent {
+  HistoryParcelsList();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class SearchMyOrders extends MyOrdersEvent {
   final String searchQuery;
   final String? type;
@@ -28,7 +42,6 @@ class SearchMyOrders extends MyOrdersEvent {
 }
 
 class LoadMoreMyOrders extends MyOrdersEvent {
-
   final String currentFilter;
 
   LoadMoreMyOrders(this.currentFilter);

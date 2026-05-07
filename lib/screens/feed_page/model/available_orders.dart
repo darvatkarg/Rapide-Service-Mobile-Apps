@@ -1,3 +1,9 @@
+bool parseBool(dynamic value) {
+  if (value is bool) return value;
+  if (value is int) return value == 1;
+  return false;
+}
+
 class AvailableOrdersResponse {
   final bool success;
   final String message;
@@ -66,6 +72,7 @@ class Orders {
   final int? deliveryTimeSlotId;
   final int? deliveryBoyId;
   final String? deliveryCharge;
+  final String? deliveryType;
   final String? subtotal;
   final String? totalPayable;
   final String? orderNote;
@@ -87,7 +94,7 @@ class Orders {
   final Earnings? earnings;
   final List<Items>? items;
   final DeliveryZone? deliveryZone;
-  final int? otpVerified;
+  final bool? otpVerified;
   final String? createdAt;
   final String? updatedAt;
   final String? total;
@@ -105,6 +112,7 @@ class Orders {
     this.deliveryTimeSlotId,
     this.deliveryBoyId,
     this.deliveryCharge,
+    this.deliveryType,
     this.subtotal,
     this.totalPayable,
     this.finalTotal,
@@ -128,7 +136,7 @@ class Orders {
     this.otpVerified,
     this.createdAt,
     this.updatedAt,
-    this.total
+    this.total,
   });
 
   factory Orders.fromJson(Map<String, dynamic> json) {
@@ -144,10 +152,11 @@ class Orders {
       estimatedDeliveryTime: json['estimated_delivery_time'],
       deliveryTimeSlotId: json['delivery_time_slot_id'],
       deliveryBoyId: json['delivery_boy_id'],
-      deliveryCharge: json['delivery_charge'],
-      subtotal: json['subtotal'],
-      totalPayable: json['total_payable'],
-      finalTotal: json['final_total'],
+      deliveryCharge: json['delivery_charge']?.toString(),
+      deliveryType: json['delivey_type']?.toString(),
+      subtotal: json['subtotal']?.toString(),
+      totalPayable: json['total_payable']?.toString(),
+      finalTotal: json['final_total']?.toString(),
       shippingName: json['shipping_name'],
       shippingAddress1: json['shipping_address_1'],
       shippingAddress2: json['shipping_address_2'],
@@ -176,10 +185,10 @@ class Orders {
           json['delivery_zone'] != null
               ? DeliveryZone.fromJson(json['delivery_zone'])
               : null,
-      otpVerified: json['otp_verified'],
+      otpVerified: parseBool(json['otp_verified']),
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
-      total: json['total']
+      total: json['total'],
     );
   }
 
@@ -195,6 +204,7 @@ class Orders {
     int? deliveryTimeSlotId,
     int? deliveryBoyId,
     String? deliveryCharge,
+    String? deliveryType,
     String? subtotal,
     String? orderNote,
     String? totalPayable,
@@ -216,10 +226,10 @@ class Orders {
     Earnings? earnings,
     List<Items>? items,
     DeliveryZone? deliveryZone,
-    int? otpVerified,
+    bool? otpVerified,
     String? createdAt,
     String? updatedAt,
-    String? total
+    String? total,
   }) {
     return Orders(
       id: id ?? this.id,
@@ -235,6 +245,7 @@ class Orders {
       deliveryTimeSlotId: deliveryTimeSlotId ?? this.deliveryTimeSlotId,
       deliveryBoyId: deliveryBoyId ?? this.deliveryBoyId,
       deliveryCharge: deliveryCharge ?? this.deliveryCharge,
+      deliveryType: deliveryType ?? this.deliveryType,
       subtotal: subtotal ?? this.subtotal,
       totalPayable: totalPayable ?? this.totalPayable,
       finalTotal: finalTotal ?? this.finalTotal,
@@ -258,7 +269,7 @@ class Orders {
       otpVerified: otpVerified ?? this.otpVerified,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      total: total ?? this.total
+      total: total ?? this.total,
     );
   }
 }
@@ -394,7 +405,7 @@ class Items {
   final String? price;
   final String? subtotal;
   final String? status;
-  final int? otpVerified;
+  final bool? otpVerified;
   final bool reachedDestination;
   final Product? product;
   final Variant? variant;
@@ -454,7 +465,7 @@ class Items {
       price: json['price'],
       subtotal: json['subtotal'],
       status: json['status'],
-      otpVerified: json['otp_verified'],
+      otpVerified: parseBool(json['otp_verified']),
       reachedDestination: false, // Default to false, bloc will update this
       product:
           json['product'] != null ? Product.fromJson(json['product']) : null,
@@ -487,7 +498,7 @@ class Items {
     String? price,
     String? subtotal,
     String? status,
-    int? otpVerified,
+    final bool? otpVerified,
     bool? reachedDestination,
     Product? product,
     Variant? variant,

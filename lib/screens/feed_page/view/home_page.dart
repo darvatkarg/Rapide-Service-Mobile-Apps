@@ -72,8 +72,7 @@ class _FeedPageState extends State<FeedPage> {
 }
 
 class FeedPageWithStatus extends StatefulWidget {
-  final int? initialTab; // 0 = Available Orders, 1 = My Orders
-
+  final int? initialTab; // 0 = top up hiostory, 1 = parcel history
   const FeedPageWithStatus({super.key, this.initialTab});
 
   @override

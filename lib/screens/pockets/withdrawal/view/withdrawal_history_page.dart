@@ -48,6 +48,8 @@ class _WithdrawalHistoryPageState extends State<WithdrawalHistoryPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<WithdrawalBloc>().add(FetchWithdrawals());
     });
+      print("🚀 Sheet init");
+    context.read<ProfileBloc>().add(LoadProfile());
   }
 
   @override
@@ -70,14 +72,29 @@ class _WithdrawalHistoryPageState extends State<WithdrawalHistoryPage> {
   }
 
   void _showCreateWithdrawalDialog() async {
+    print('widrall open@@@@@@@@@@@@@@@@@@@');
+    // final result = await showModalBottomSheet(
+    //   context: context,
+    //   isScrollControlled: true,
+    //   backgroundColor: Colors.transparent,
+    //   builder: (bottomSheetContext) {
+    //     return BlocProvider.value(
+    //       value: context.read<WithdrawalBloc>(),
+    //       child: const CreateWithdrawalSheet(),
+    //     );
+    //   },
+    // );
+    print('printingg top');
     final result = await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) => const CreateWithdrawalSheet(),
     );
+    print('printingg med');
 
     if (result == true && mounted) {
+      print('printingg in ');
       context.read<WithdrawalBloc>().add(FetchWithdrawals());
       context.read<ProfileBloc>().add(LoadProfile());
     }

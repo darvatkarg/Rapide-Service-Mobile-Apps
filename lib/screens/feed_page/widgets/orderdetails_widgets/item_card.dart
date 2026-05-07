@@ -68,11 +68,27 @@ class ItemCard extends StatelessWidget {
                       height: 50.h,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(item.product!.image!),
+                          image:
+                              (item.product?.image != null &&
+                                      item.product!.image!.isNotEmpty)
+                                  ? NetworkImage(item.product!.image!)
+                                  : const AssetImage(
+                                        "assets/images/default_user.png",
+                                      )
+                                      as ImageProvider,
+                          fit: BoxFit.cover,
                         ),
                         color: Colors.blue[100],
                         borderRadius: BorderRadius.circular(8.r),
                       ),
+                      // decoration: BoxDecoration(
+                      //   image:
+                      //   DecorationImage(
+                      //     image: NetworkImage(item.product!.image!),
+                      //   ),
+                      //   color: Colors.blue[100],
+                      //   borderRadius: BorderRadius.circular(8.r),
+                      // ),
                       child:
                           item.product!.image == null
                               ? Center(
@@ -370,20 +386,29 @@ class ItemCard extends StatelessWidget {
                             height: 40.h,
                             textSize: 15.sp,
                             text: AppLocalizations.of(context)!.collect,
-                            onPressed: (item.status?.toLowerCase() == 'preparing' || item.status?.toLowerCase() == 'ready' || orderStatus?.toLowerCase() == 'assigned') 
-                                ? () {
-                                    if (orderStatus?.toLowerCase() == 'assigned') {
-                                      onCollect?.call();
-                                    } else if (from) {
-                                      onDelivered?.call();
-                                    } else {
-                                      onCollect?.call();
+                            onPressed:
+                                (item.status?.toLowerCase() == 'preparing' ||
+                                        item.status?.toLowerCase() == 'ready' ||
+                                        orderStatus?.toLowerCase() ==
+                                            'assigned')
+                                    ? () {
+                                      if (orderStatus?.toLowerCase() ==
+                                          'assigned') {
+                                        onCollect?.call();
+                                      } else if (from) {
+                                        onDelivered?.call();
+                                      } else {
+                                        onCollect?.call();
+                                      }
                                     }
-                                  } 
-                                : null,
-                            backgroundColor: (item.status?.toLowerCase() == 'preparing' || item.status?.toLowerCase() == 'ready' || orderStatus?.toLowerCase() == 'assigned')
-                                ? AppColors.primaryColor
-                                : Colors.grey,
+                                    : null,
+                            backgroundColor:
+                                (item.status?.toLowerCase() == 'preparing' ||
+                                        item.status?.toLowerCase() == 'ready' ||
+                                        orderStatus?.toLowerCase() ==
+                                            'assigned')
+                                    ? AppColors.primaryColor
+                                    : Colors.grey,
                             textColor: Colors.white,
                             borderRadius: 8.r,
                             padding: EdgeInsets.symmetric(

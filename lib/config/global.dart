@@ -12,6 +12,33 @@ class Global {
 
   static const String _statusBoxName = 'DeliveryBoyStatusBox';
   static const String _statusKey = 'isOnline';
+  static const String _driverIdKey = 'driverId';
+  static String? _cachedDriverId;
+
+  static Future<void> setDriverId(String driverId) async {
+  final box = await _userBox;
+  await box.put(_driverIdKey, driverId);
+  _cachedDriverId = driverId;
+}
+
+static Future<String?> getDriverId() async {
+  if (_cachedDriverId != null) return _cachedDriverId;
+
+  final box = await _userBox;
+  final driverId = box.get(_driverIdKey);
+
+  if (driverId != null) {
+    _cachedDriverId = driverId.toString();
+  }
+
+  return driverId?.toString();
+}
+
+static Future<void> clearDriverId() async {
+  final box = await _userBox;
+  await box.delete(_driverIdKey);
+  _cachedDriverId = null;
+}
 
   static Future<Box> get _userBox async {
     return await Hive.openBox(_boxName);

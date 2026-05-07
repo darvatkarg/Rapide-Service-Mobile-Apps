@@ -97,6 +97,7 @@ class User {
     walletBalance = _parseDouble(json['wallet_balance']);
     blockedBalance = _parseDouble(json['blocked_balance']);
     availableBalance = _parseDouble(json['available_balance']);
+    print("🔥 JSON available_balance: ${json['available_balance']}");
     referralCode = json['referral_code'];
     friendsCode = json['friends_code'];
     rewardPoints = _parseInt(json['reward_points']);
@@ -468,18 +469,38 @@ class Media {
 }
 
 // Global helper methods for safe parsing
-double? _parseDouble(dynamic value) {
-  if (value == null) return null;
+// double? _parseDouble(dynamic value) {
+//   if (value == null) return null;
+//   if (value is double) return value;
+//   if (value is int) return value.toDouble();
+//   if (value is String) {
+//     try {
+//       return double.parse(value);
+//     } catch (e) {
+//       return null;
+//     }
+//   }
+//   return null;
+// }
+ double _parseDouble(dynamic value) {
+  print("🧪 RAW VALUE FOR PARSE: $value");
+
+  if (value == null) return 0.0;
+
   if (value is double) return value;
   if (value is int) return value.toDouble();
+
   if (value is String) {
-    try {
-      return double.parse(value);
-    } catch (e) {
-      return null;
-    }
+    final cleaned = value.replaceAll(',', '').trim();
+    print("🧪 CLEANED VALUE: $cleaned");
+
+    final parsed = double.tryParse(cleaned);
+    print("🧪 PARSED VALUE: $parsed");
+
+    return parsed ?? 0.0;
   }
-  return null;
+
+  return 0.0;
 }
 
 int? _parseInt(dynamic value) {

@@ -198,7 +198,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
     // Only refresh if we don't have order data
     // Don't refresh if we already have the latest state to preserve bloc updates
     if (_fetchedOrder == null) {
-
       _refreshOrderDataIfNeeded();
     } else {}
   }
@@ -264,22 +263,32 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
               // Update the local order data immediately upon API success
               setState(() {
                 if (_fetchedOrder?.items != null) {
-                  List<Items> updatedItems = _fetchedOrder!.items!.map((item) {
-                    if (item.id.toString() == processedItemId) {
-                      // Determine new status based on whether we are delivering or collecting
-                      bool isDelivery = (widget.from && _fetchedOrder?.status?.toLowerCase() != 'assigned') || _fetchedOrder?.status?.toLowerCase() == 'out_for_delivery';
-                      String newStatus = isDelivery ? 'delivered' : 'collected';
-                      
-                      // Also update otpVerified if this was an OTP delivery
-                      int newOtpVerified = (isDelivery && item.product?.requiresOtp == 1) ? 1 : item.otpVerified ?? 0;
-                      
-                      return item.copyWith(
-                        status: newStatus,
-                        otpVerified: newOtpVerified,
-                      );
-                    }
-                    return item;
-                  }).toList();
+                  List<Items> updatedItems =
+                      _fetchedOrder!.items!.map((item) {
+                        if (item.id.toString() == processedItemId) {
+                          // Determine new status based on whether we are delivering or collecting
+                          bool isDelivery =
+                              (widget.from &&
+                                  _fetchedOrder?.status?.toLowerCase() !=
+                                      'assigned') ||
+                              _fetchedOrder?.status?.toLowerCase() ==
+                                  'out_for_delivery';
+                          String newStatus =
+                              isDelivery ? 'delivered' : 'collected';
+
+                          // Also update otpVerified if this was an OTP delivery
+                          bool newOtpVerified =
+                              isDelivery && item.product?.requiresOtp == 1
+                                  ? true
+                                  : (item.otpVerified ?? false);
+
+                          return item.copyWith(
+                            status: newStatus,
+                            otpVerified: newOtpVerified,
+                          );
+                        }
+                        return item;
+                      }).toList();
 
                   _fetchedOrder = _fetchedOrder!.copyWith(items: updatedItems);
                 }
@@ -287,26 +296,32 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
               });
 
               // Dispatch FetchOrderDetails to refresh from API (as backup)
-              context.read<OrderDetailsBloc>().add(FetchOrderDetails(widget.orderId));
+              context.read<OrderDetailsBloc>().add(
+                FetchOrderDetails(widget.orderId),
+              );
 
-              String successMessage = (widget.from && _fetchedOrder?.status?.toLowerCase() != 'assigned')
-                  ? AppLocalizations.of(context)!.itemDeliveredSuccessfully
-                  : AppLocalizations.of(context)!.itemCollectedSuccessfully;
+              String successMessage =
+                  (widget.from &&
+                          _fetchedOrder?.status?.toLowerCase() != 'assigned')
+                      ? AppLocalizations.of(context)!.itemDeliveredSuccessfully
+                      : AppLocalizations.of(context)!.itemCollectedSuccessfully;
 
               ToastManager.show(
                 context: context,
                 message: successMessage,
                 type: ToastType.success,
               );
-            } else if (!widget.from && _currentProcessingItemId == 'collecting_all') {
+            } else if (!widget.from &&
+                _currentProcessingItemId == 'collecting_all') {
               // Handle success for "collect all" mode
               setState(() {
                 if (_fetchedOrder?.items != null) {
-                  List<Items> updatedItems = _fetchedOrder!.items!.map((item) {
-                    return item.status?.toLowerCase() != 'delivered' 
-                        ? item.copyWith(status: 'collected') 
-                        : item;
-                  }).toList();
+                  List<Items> updatedItems =
+                      _fetchedOrder!.items!.map((item) {
+                        return item.status?.toLowerCase() != 'delivered'
+                            ? item.copyWith(status: 'collected')
+                            : item;
+                      }).toList();
                   _fetchedOrder = _fetchedOrder!.copyWith(items: updatedItems);
                 }
                 _currentProcessingItemId = null;
@@ -314,12 +329,15 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
 
               ToastManager.show(
                 context: context,
-                message: AppLocalizations.of(context)!.allItemsCollectedSuccessfully,
+                message:
+                    AppLocalizations.of(context)!.allItemsCollectedSuccessfully,
                 type: ToastType.success,
               );
-              
+
               // Refresh order details to sync with API
-              context.read<OrderDetailsBloc>().add(FetchOrderDetails(widget.orderId));
+              context.read<OrderDetailsBloc>().add(
+                FetchOrderDetails(widget.orderId),
+              );
             }
           } else if (state is ItemsCollectedError) {
             // Store the item ID before resetting it
@@ -328,7 +346,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
             setState(() {
               _currentProcessingItemId = null;
             });
-
 
             ToastManager.show(
               context: context,
@@ -349,11 +366,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
                   if (_fetchedOrder?.id != widget.orderId) {
                     _hasShownConfetti = false;
                   }
-
                 });
               } else if (state is OrderDetailsError) {
-                setState(() {
-                });
+                setState(() {});
               }
             },
             builder: (context, state) {
@@ -413,7 +428,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
                 );
               }
 
-              return CustomScaffold(
+              return 
+              
+              CustomScaffold(
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 appBar: CustomAppBarWithoutNavbar(
                   title: AppLocalizations.of(context)!.orderDetails,
@@ -494,7 +511,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
                                 ?.map((item) => _buildItemCard(item))
                                 .toList() ??
                             [],
-                        onCollectAll: (order.status?.toLowerCase() == 'assigned' && !_areAllItemsCollected())
+                        onCollectAll:
+                            (order.status?.toLowerCase() == 'assigned' &&
+                                    !_areAllItemsCollected())
                                 ? _collectAllItems
                                 : null,
                       ),
@@ -620,7 +639,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
     // Simplified and stricter logic for flow control
     bool allItemsCollected = _fetchedOrder!.items!.every((item) {
       return item.status?.toLowerCase() == 'collected' ||
-             item.status?.toLowerCase() == 'delivered';
+          item.status?.toLowerCase() == 'delivered';
     });
 
     bool allItemsDelivered = _fetchedOrder!.items!.every((item) {
@@ -629,12 +648,16 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
 
     // Check if any items have reached destination according to verified state
     bool anyItemsReachedDestination = _fetchedOrder!.items!.any(
-      (item) => item.reachedDestination == true || item.status?.toLowerCase() == 'delivered',
+      (item) =>
+          item.reachedDestination == true ||
+          item.status?.toLowerCase() == 'delivered',
     );
 
     // Case 1: All items collected but not yet reached destination -> View Pickup Route
     // This only appears after ALL items are definitively collected from the server
-    if (allItemsCollected && !anyItemsReachedDestination && !allItemsDelivered) {
+    if (allItemsCollected &&
+        !anyItemsReachedDestination &&
+        !allItemsDelivered) {
       return ActionBottomSheet(
         buttonText: AppLocalizations.of(context)!.viewPickupRoute,
         onPressed: () {
@@ -708,7 +731,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
       );
     }
   }
-  
+
   void _deliverItemWithoutOtp(Items item) async {
     if (item.id != null) {
       // Set the current processing item ID for tracking
@@ -978,11 +1001,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage>
   }
 
   String _getStatusText() {
-    return OrderService.getStatusText(
-      context,
-      _fetchedOrder,
-      widget.from,
-    );
+    return OrderService.getStatusText(context, _fetchedOrder, widget.from);
   }
 
   int _getCollectedItemsCount() {

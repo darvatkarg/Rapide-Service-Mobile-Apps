@@ -23,10 +23,7 @@ import 'package:hyper_local/router/app_routes.dart';
 class HomeHeaderSection extends StatelessWidget {
   final Function() handleToggle;
 
-  const HomeHeaderSection({
-    super.key,
-    required this.handleToggle,
-  });
+  const HomeHeaderSection({super.key, required this.handleToggle});
 
   void _showDeliveryZoneErrorDialog(BuildContext context, String errorMessage) {
     showDialog(
@@ -51,12 +48,18 @@ class HomeHeaderSection extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               SizedBox(height: 8.h),
-              CustomText(text: AppLocalizations.of(context)!.moveToCoveredDeliveryArea),
-              CustomText(text: AppLocalizations.of(context)!.checkDeliveryZoneInProfile),
-              CustomText(text: AppLocalizations.of(context)!.ensureGpsEnabledAccurate),
+              CustomText(
+                text: AppLocalizations.of(context)!.moveToCoveredDeliveryArea,
+              ),
+              CustomText(
+                text: AppLocalizations.of(context)!.checkDeliveryZoneInProfile,
+              ),
+              CustomText(
+                text: AppLocalizations.of(context)!.ensureGpsEnabledAccurate,
+              ),
             ],
           ),
-                    actions: [
+          actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: CustomText(text: AppLocalizations.of(context)!.ok),
@@ -67,17 +70,19 @@ class HomeHeaderSection extends StatelessWidget {
                 // Navigate to delivery zone page
                 context.push('/delivery-zone');
               },
-              child: CustomText(text: AppLocalizations.of(context)!.viewDeliveryZone),
-            ),
-                          CustomButton(
-                            textSize: 15.sp,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  // Retry getting location
-                  context.read<DeliveryBoyStatusBloc>().add(ToggleStatus(true));
-                },
-                text: AppLocalizations.of(context)!.retry,
+              child: CustomText(
+                text: AppLocalizations.of(context)!.viewDeliveryZone,
               ),
+            ),
+            CustomButton(
+              textSize: 15.sp,
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Retry getting location
+                context.read<DeliveryBoyStatusBloc>().add(ToggleStatus(true));
+              },
+              text: AppLocalizations.of(context)!.retry,
+            ),
           ],
         );
       },
@@ -92,11 +97,11 @@ class HomeHeaderSection extends StatelessWidget {
           listener: (context, state) {
             if (state is DeliveryBoyStatusLoaded) {
               if (state.message != null && state.isVerified) {
-                ToastManager.show(
-                  context: context,
-                  message: state.message!,
-                  type: ToastType.success,
-                );
+                // ToastManager.show(
+                //   context: context,
+                //   message: state.message!,
+                //   type: ToastType.success,
+                // );
               }
             } else if (state is DeliveryBoyStatusError) {
               // Show toast for general errors
@@ -151,8 +156,13 @@ class HomeHeaderSection extends StatelessWidget {
                           ),
                         ),
                     onChanged: (b) {
-                      handleToggle();
+                      context.read<DeliveryBoyStatusBloc>().add(
+                        ToggleStatus(b),
+                      );
                     },
+                    // onChanged: (b) {
+                    //   handleToggle();
+                    // },
                     iconBuilder:
                         (value) =>
                             value
@@ -192,7 +202,10 @@ class HomeHeaderSection extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: BlocBuilder<NotificationBloc, NotificationState>(
+                          child: BlocBuilder<
+                            NotificationBloc,
+                            NotificationState
+                          >(
                             builder: (context, notificationState) {
                               int unreadCount = 0;
 
@@ -202,7 +215,8 @@ class HomeHeaderSection extends StatelessWidget {
 
                               return Badge.count(
                                 count: unreadCount,
-                                isLabelVisible: unreadCount > 0,           // hide badge when 0
+                                isLabelVisible:
+                                    unreadCount > 0, // hide badge when 0
                                 backgroundColor: Colors.red,
                                 textColor: Colors.white,
                                 textStyle: TextStyle(
@@ -215,7 +229,8 @@ class HomeHeaderSection extends StatelessWidget {
                                 child: IconButton(
                                   color: AppColors.primaryColor,
                                   style: IconButton.styleFrom(
-                                    backgroundColor: AppColors.primaryColor.withValues(alpha: 0.1)
+                                    backgroundColor: AppColors.primaryColor
+                                        .withValues(alpha: 0.1),
                                   ),
                                   onPressed: () {
                                     context.push(AppRoutes.notifications);
@@ -233,7 +248,10 @@ class HomeHeaderSection extends StatelessWidget {
                               if (profileState is ProfileLoaded &&
                                   profileState.profile.user?.profileImage !=
                                       null &&
-                                  profileState.profile.user!.profileImage!
+                                  profileState
+                                      .profile
+                                      .user!
+                                      .profileImage!
                                       .isNotEmpty) {
                                 profileImageUrl =
                                     profileState.profile.user!.profileImage!;
@@ -258,39 +276,40 @@ class HomeHeaderSection extends StatelessWidget {
                                   child: CircleAvatar(
                                     radius: 18.r,
                                     backgroundColor: AppColors.primaryColor,
-                                    child: profileImageUrl.startsWith('http')
-                                        ? ClipOval(
-                                          child: Image.network(
-                                            profileImageUrl,
-                                            width: 36.r,
-                                            height: 36.r,
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (
-                                              context,
-                                              error,
-                                              stackTrace,
-                                            ) {
-                                              return Icon(
-                                                Icons.person,
-                                                size: 18.sp,
-                                                color: Colors.white,
-                                              );
-                                            },
-                                          ),
-                                        )
-                                        : profileImageUrl ==
+                                    child:
+                                        profileImageUrl.startsWith('http')
+                                            ? ClipOval(
+                                              child: Image.network(
+                                                profileImageUrl,
+                                                width: 36.r,
+                                                height: 36.r,
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (
+                                                  context,
+                                                  error,
+                                                  stackTrace,
+                                                ) {
+                                                  return Icon(
+                                                    Icons.person,
+                                                    size: 18.sp,
+                                                    color: Colors.white,
+                                                  );
+                                                },
+                                              ),
+                                            )
+                                            : profileImageUrl ==
                                                 "assets/png/profile.jpg"
-                                        ? Icon(
-                                          Icons.person,
-                                          size: 18.sp,
-                                          color: Colors.white,
-                                        )
-                                        : Image.asset(
-                                          profileImageUrl,
-                                          width: 36.r,
-                                          height: 36.r,
-                                          fit: BoxFit.cover,
-                                        ),
+                                            ? Icon(
+                                              Icons.person,
+                                              size: 18.sp,
+                                              color: Colors.white,
+                                            )
+                                            : Image.asset(
+                                              profileImageUrl,
+                                              width: 36.r,
+                                              height: 36.r,
+                                              fit: BoxFit.cover,
+                                            ),
                                   ),
                                 ),
                               );
@@ -308,4 +327,4 @@ class HomeHeaderSection extends StatelessWidget {
       },
     );
   }
-} 
+}

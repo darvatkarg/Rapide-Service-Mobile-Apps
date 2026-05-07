@@ -18,6 +18,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(ProfileLoading());
     try {
       final profile = await _profileRepo.getProfile();
+      print('profile bloc @@@@@@@$profile');
       emit(ProfileLoaded(profile));
     } catch (e) {
       // Add settings detailed error logging
@@ -36,8 +37,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     try {
-
-
       emit(ProfileUpdating());
 
       final profile = await _profileRepo.updateProfile(
@@ -53,10 +52,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         profileImageFile: event.profileImageFile,
       );
 
-
       emit(ProfileUpdated(profile, 'Profile updated successfully'));
     } catch (e) {
-
       if (e.toString().contains('toDouble') ||
           e.toString().contains('NoSuchMethodError')) {
         emit(ProfileError('Data format error: Please contact support'));

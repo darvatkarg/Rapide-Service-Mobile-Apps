@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hyper_local/router/app_routes.dart';
@@ -322,8 +323,21 @@ class NotificationManager {
 }
 
 // Background message handler (must be top-level function)
+// @pragma('vm:entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   log('📨 Background message received: ${message.messageId}');
+//   log('Title: ${message.notification?.title}');
+//   log('Body: ${message.notification?.body}');
+//   log('Data: ${message.data}');
+// }
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // ✅ ADD THIS
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp();
+  }
+
   log('📨 Background message received: ${message.messageId}');
   log('Title: ${message.notification?.title}');
   log('Body: ${message.notification?.body}');

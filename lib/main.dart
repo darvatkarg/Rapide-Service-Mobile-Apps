@@ -18,10 +18,12 @@ import 'package:hyper_local/screens/feed_page/bloc/deliveryboy_status_update_blo
 import 'package:hyper_local/screens/feed_page/bloc/available_orders_bloc/available_orders_bloc.dart';
 import 'package:hyper_local/screens/feed_page/bloc/items_collected_bloc/items_collected_bloc.dart';
 import 'package:hyper_local/screens/feed_page/bloc/my_orders_bloc/my_orders_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/order_details_bloc/order_details_bloc.dart';
 import 'package:hyper_local/screens/feed_page/bloc/return_order/pickup_order_details_bloc/pickup_order_details_bloc.dart';
 import 'package:hyper_local/screens/feed_page/bloc/return_order/pickup_orders_list_bloc/pickup_order_list_bloc.dart';
 import 'package:hyper_local/screens/feed_page/bloc/return_order/return_orders_list_bloc/return_order_list_bloc.dart';
 import 'package:hyper_local/screens/feed_page/bloc/return_order/update_return_order_status_bloc/update_return_order_status_bloc.dart';
+import 'package:hyper_local/screens/feed_page/repo/order_details.dart';
 import 'package:hyper_local/screens/pockets/cash_collection/bloc/cash_collection_bloc.dart';
 import 'package:hyper_local/screens/pockets/cash_collection/bloc/cash_collection_event.dart';
 import 'package:hyper_local/screens/pockets/cash_collection/repo/cash_collection_repo.dart';
@@ -60,9 +62,14 @@ void main() async {
   // Initialize Firebase FIRST
   try {
     log('🔥 Initializing Firebase...');
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    if (Firebase.apps.isEmpty) {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
+    // await Firebase.initializeApp(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
     log('✅ Firebase initialized successfully');
   } catch (e) {
     log('❌ Firebase initialization error: $e');
@@ -194,6 +201,7 @@ class MyApp extends StatelessWidget {
           SystemSettingsBloc(SystemSettingsRepo())
             ..add(FetchSystemSettings()),
         ),
+        BlocProvider(create: (context) => OrderDetailsBloc(OrderDetailsRepo())),
         ChangeNotifierProvider(create: (context) => LocalizationService()),
         BlocProvider(create: (context) => EarningsBloc(earningsRepo)),
         BlocProvider(

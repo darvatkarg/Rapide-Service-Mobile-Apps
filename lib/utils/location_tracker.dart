@@ -244,29 +244,117 @@ class LocationTracker {
 }
 
 // Background service callback
+// @pragma('vm:entry-point')
+// void onStart(ServiceInstance service) async {
+//   // Initialize location tracking in background
+//   final location = Location();
+//   final locationRepo = UpdateCurrentLocationRepo();
+//   LocationData? lastLocation;
+
+//   // Configure location for background
+//   await location.changeSettings(
+//     accuracy: LocationAccuracy.high,
+//     interval: 30000, // 30 seconds
+//     distanceFilter: 10.0, // 10 meters
+//   );
+
+//   // Get initial location
+//   try {
+//     lastLocation = await location.getLocation();
+//     await _updateLocationInBackground(locationRepo, lastLocation);
+//   } catch (e) {
+//     //
+//   }
+
+//   // Listen to location changes
+//   location.onLocationChanged.listen((LocationData locationData) async {
+//     if (lastLocation == null) {
+//       lastLocation = locationData;
+//       await _updateLocationInBackground(locationRepo, locationData);
+//       return;
+//     }
+
+//     // Calculate distance
+//     double distance = _calculateDistanceInBackground(
+//       lastLocation!.latitude!,
+//       lastLocation!.longitude!,
+//       locationData.latitude!,
+//       locationData.longitude!,
+//     );
+
+//     // Update if distance is significant
+//     if (distance >= 10.0) {
+//       lastLocation = locationData;
+//       await _updateLocationInBackground(locationRepo, locationData);
+//     }
+//   });
+
+//   // Start periodic location updates (60 seconds interval)
+//   Timer.periodic(Duration(seconds: 60), (_) async {
+//     try {
+//       final locationData = await location.getLocation();
+//       await _updateLocationInBackground(locationRepo, locationData);
+//     } catch (e) {
+//       //
+//     }
+//   });
+
+//   // Keep service alive
+//   service.on('stopService').listen((event) {
+//     service.stopSelf();
+//   });
+// }
+
+
 @pragma('vm:entry-point')
 void onStart(ServiceInstance service) async {
-  // Initialize location tracking in background
   final location = Location();
   final locationRepo = UpdateCurrentLocationRepo();
   LocationData? lastLocation;
 
-  // Configure location for background
-  await location.changeSettings(
-    accuracy: LocationAccuracy.high,
-    interval: 30000, // 30 seconds
-    distanceFilter: 10.0, // 10 meters
-  );
+  try {
+    // ✅ 1. Check service
+    bool serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        // log("❌ Background: Location service disabled");
+        return;
+      }
+    }
 
-  // Get initial location
+    // ✅ 2. Check permission
+    PermissionStatus permission = await location.hasPermission();
+    if (permission == PermissionStatus.denied) {
+      permission = await location.requestPermission();
+      if (permission != PermissionStatus.granted &&
+          permission != PermissionStatus.grantedLimited) {
+        // log("❌ Background: Location permission denied");
+        return;
+      }
+    }
+
+    // ✅ 3. NOW safe to configure
+    await location.changeSettings(
+      accuracy: LocationAccuracy.high,
+      interval: 30000,
+      distanceFilter: 10.0,
+    );
+
+  } catch (e) {
+    // log("❌ Background setup error: $e");
+    return;
+  }
+
+  // ✅ Get initial location
   try {
     lastLocation = await location.getLocation();
     await _updateLocationInBackground(locationRepo, lastLocation);
   } catch (e) {
-    //
+    // log("❌ Initial location error: $e");
   }
 
-  // Listen to location changes
+  // ✅ Listen to changes
   location.onLocationChanged.listen((LocationData locationData) async {
     if (lastLocation == null) {
       lastLocation = locationData;
@@ -274,7 +362,6 @@ void onStart(ServiceInstance service) async {
       return;
     }
 
-    // Calculate distance
     double distance = _calculateDistanceInBackground(
       lastLocation!.latitude!,
       lastLocation!.longitude!,
@@ -282,24 +369,13 @@ void onStart(ServiceInstance service) async {
       locationData.longitude!,
     );
 
-    // Update if distance is significant
     if (distance >= 10.0) {
       lastLocation = locationData;
       await _updateLocationInBackground(locationRepo, locationData);
     }
   });
 
-  // Start periodic location updates (60 seconds interval)
-  Timer.periodic(Duration(seconds: 60), (_) async {
-    try {
-      final locationData = await location.getLocation();
-      await _updateLocationInBackground(locationRepo, locationData);
-    } catch (e) {
-      //
-    }
-  });
-
-  // Keep service alive
+  // ✅ Keep service alive
   service.on('stopService').listen((event) {
     service.stopSelf();
   });

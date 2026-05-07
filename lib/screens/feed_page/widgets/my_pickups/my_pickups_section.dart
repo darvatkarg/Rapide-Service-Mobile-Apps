@@ -55,7 +55,9 @@ class _MyPickupsSectionState extends State<MyPickupsSection>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Container(
+    return 
+
+    Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child:
           widget.isDeliveryBoyActive

@@ -53,6 +53,7 @@ class AvailableOrdersBloc
         offset: _offset,
         search: '',
       );
+      print('available order response################ $response');
 
       final List<Orders> orders =
           (response['data']['orders'] as List<dynamic>?)

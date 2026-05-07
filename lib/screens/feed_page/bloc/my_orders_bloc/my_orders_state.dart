@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hyper_local/screens/feed_page/model/available_parcels.dart';
 import '../../model/available_orders.dart';
 
 abstract class MyOrdersState extends Equatable {
@@ -9,6 +10,10 @@ abstract class MyOrdersState extends Equatable {
 class MyOrdersInitial extends MyOrdersState {}
 
 class MyOrdersLoading extends MyOrdersState {}
+
+class MyParcelsLoading extends MyOrdersState {}
+
+class MyHistoryParcelsLoading extends MyOrdersState {}
 
 class MyOrdersRefreshing extends MyOrdersState {
   final List<Orders> myOrders;
@@ -24,7 +29,12 @@ class MyOrdersRefreshing extends MyOrdersState {
   });
 
   @override
-  List<Object> get props => [myOrders, hasReachedMax, totalOrders, selectedFilter];
+  List<Object> get props => [
+    myOrders,
+    hasReachedMax,
+    totalOrders,
+    selectedFilter,
+  ];
 }
 
 class MyOrdersError extends MyOrdersState {
@@ -50,5 +60,40 @@ class MyOrdersLoaded extends MyOrdersState {
   });
 
   @override
-  List<Object> get props => [myOrders, hasReachedMax, totalOrders, selectedFilter];
+  List<Object> get props => [
+    myOrders,
+    hasReachedMax,
+    totalOrders,
+    selectedFilter,
+  ];
+}
+
+class MyOngoingParcelsLoaded extends MyOrdersState {
+  final List<AvailableParcels> availableParcels;
+  // final bool hasReachedMax;
+  // final int totalOrders;
+  // final String selectedFilter;
+
+  MyOngoingParcelsLoaded({
+    required this.availableParcels,
+    // required this.hasReachedMax,
+    // required this.totalOrders,
+    // required this.selectedFilter,
+  });
+
+  @override
+  List<Object> get props => [availableParcels];
+}
+
+class MyHistoryParcelsLoaded extends MyOrdersState {
+  final List<AvailableParcels> historyParcels;
+
+
+  MyHistoryParcelsLoaded({
+    required this.historyParcels,
+
+  });
+
+  @override
+  List<Object> get props => [historyParcels];
 }

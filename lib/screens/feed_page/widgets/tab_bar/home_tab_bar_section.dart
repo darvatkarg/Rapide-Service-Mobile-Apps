@@ -13,6 +13,7 @@ class HomeTabBarSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
+        tabAlignment: TabAlignment.center, 
       controller: tabController,
       isScrollable: true,
       physics: const BouncingScrollPhysics(),

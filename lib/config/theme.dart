@@ -99,7 +99,7 @@ class AppColor {
         bodyMedium: TextStyle(color: AppColors.textColor),
         bodySmall: TextStyle(color: AppColors.textSecondaryColor),
       ),
-      colorScheme: const ColorScheme.light(
+      colorScheme:  ColorScheme.light(
         primary: AppColors.primaryColor,
         secondary: AppColors.secondaryColor,
         surface: AppColors.cardColor,

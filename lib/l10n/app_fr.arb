@@ -70,6 +70,7 @@
   "dashboard": "Tableau de bord",
   "home": "Accueil",
   "orders": "Commandes",
+  "parcel": "Colis",
   "earnings": "Gains",
   "profile": "Profil",
   "settings": "Paramètres",
@@ -93,7 +94,8 @@
   "noCoordinatesAvailableForMapView": "Aucune coordonnée disponible pour la vue carte",
   "routeDetailsNotAvailableForMapView": "Détails de l'itinéraire non disponibles pour la vue carte",
   "navigationError": "Erreur de navigation : {error}",
-  "myOrders": "commandes",
+  "myOrders": "Historique des commandes",
+  "topUpHistory": "Historique des recharges",
   "noOrdersFound": "Aucune commande trouvée",
   "noOrdersAcceptedYet": "Vous n'avez pas encore accepté de commandes",
   "orderNumber": "Commande #{orderId}",
@@ -231,7 +233,8 @@
   "offline": "Hors ligne",
   
   "@@pockets": {},
-  "pockets": "Poches",
+  "pockets": "Mon portefeuille",
+  "parcelDetails": "Détails du colis",
   "balance": "Solde",
   "withdraw": "Retirer",
   "withdrawalHistory": "Historique des retraits",
@@ -472,7 +475,7 @@
   "errorLoadingProfile": "Erreur lors du chargement du profil",
   "retry": "Réessayer",
   "settings": "Paramètres",
-  "accountSettings": "Paramètres du compte",
+  "accountSettings": "Comptabilité",
   "manageProfileInformation": "Gérer vos informations de profil",
   "appSettings": "Paramètres de l'application",
   "notifications": "Notifications",
@@ -645,7 +648,7 @@
   "@@availableOrders": {},
   "refreshing": "Actualisation...",
   "accountInactive": "Compte inactif",
-  "activateAccountToViewOrders": "Vous devez activer votre compte pour voir et accepter les commandes disponibles",
+  "activateAccountToViewOrders": "Activez votre compte pour recevoir vos commandes.",
   "activateAccount": "Activer le compte",
   "tapPowerButtonToGoOnline": "Appuyez sur le bouton d'alimentation dans l'en-tête pour aller en ligne",
   
@@ -657,7 +660,7 @@
 
  "documentLbl": "document",
   "pickupOrders": "Commandes de ramassage",
-  "availPickupOrders": "Colis",
+  "availPickupOrders": "Historique des colis",
   "noReturnOrdersAvailable": "Aucune commande de ramassage disponible",
   "activateAccountToViewPickupOrders": "Vous devez activer votre compte pour voir et accepter les commandes de ramassage",
   "noPickupOrders": "Aucune commande de ramassage",
@@ -743,6 +746,35 @@
     "allTime": "Depuis toujours",
     "weekN": "Semaine {weekNumber}",
       "feed": "Historique",
-      "pockets": "Gains",
-      "settings": "Paramètres"
+ 
+      "settings": "Paramètres",
+
+       "areYouSureYouWantToExitTheApp" : "Êtes-vous sûr de vouloir quitter l'application ?",
+  
+
+  "billingSummary" : "Résumé de la facturation",
+  
+
+"chargePayBy" : "Frais payés par",
+"deliveryFee" : "Frais de livraison",
+  
+
+"due" : "Dû",
+  
+"generalInfo" : "Informations générales",
+"noRecordFound" : "Aucun enregistrement trouvé",
+"orderDate" : "Date de la commande",
+"parcelCategory" : "Catégorie d'objet",
+"parcelDeliveryItemms" : "Éléments de livraison",
+"parcelType" : "Type d'objet",
+"paymentDetails" : "Détails du paiement",
+"receiverDetails" : "Détails du destinataire",
+"senderDetails" : "Détails de l'expéditeur",
+"topUpNow" : "Recharger maintenant",
+"totalAmount" : "Montant total",
+"unpaid" : "Impayé",
+"walletBalance" : "Solde du portefeuille",
+"walletHistory" : "Historique du portefeuille",
+"orderNumbers" : "Numéros de commande",
+"order": "Commander"
 } 

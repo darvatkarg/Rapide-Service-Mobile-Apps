@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hyper_local/utils/firebase_location_service.dart';
 import 'package:location/location.dart';
 import '../../../../config/api_base_helper.dart';
 import '../../../../config/api_routes.dart';
@@ -17,6 +19,7 @@ class DeliveryBoyStatusBloc
   final PeriodicLocationService _periodicLocationService =
       PeriodicLocationService();
   final DeliveryBoyStatusRepo _deliveryBoyStatusRepo = DeliveryBoyStatusRepo();
+  final FirebaseLocationService _firebaseService = FirebaseLocationService();
   bool _isProcessing = false;
   bool _isCheckingApi = false;
 
@@ -27,9 +30,15 @@ class DeliveryBoyStatusBloc
   }
 
   @override
-  Future<void> close() {
+  Future<void> close() async {
     _locationTracker.stopTracking();
     _periodicLocationService.stopPeriodicUpdates();
+
+    String? driverId = await Global.getDriverId();
+    if (driverId != null) {
+      _firebaseService.stop(driverId);
+    }
+
     return super.close();
   }
 
@@ -41,25 +50,39 @@ class DeliveryBoyStatusBloc
       // Emit the local status immediately
       emit(DeliveryBoyStatusLoaded(isOnline: event.isOnline));
 
-
       // Start location services if online
-      if (event.isOnline) {
+      // if (event.isOnline) {
 
+      //   _locationTracker.startTracking();
+      //   _periodicLocationService.startPeriodicUpdates();
+      // }
+
+      if (event.isOnline) {
         _locationTracker.startTracking();
         _periodicLocationService.startPeriodicUpdates();
+
+        String? driverId = await Global.getDriverId();
+        if (driverId == null) {
+          debugPrint("❌ Driver ID is NULL");
+          return;
+        }
+        await _firebaseService.start(driverId);
+      } else {
+        String? driverId = await Global.getDriverId();
+
+        if (driverId == null) {
+          debugPrint("❌ Driver ID is NULL");
+          return;
+        }
+        _firebaseService.stop(driverId);
       }
-
-
     } catch (e) {
-
       emit(
         DeliveryBoyStatusError(
           'Failed to sync initial status: ${e.toString()}',
         ),
       );
     }
-
-
   }
 
   Future<void> _onCheckApiStatus(
@@ -67,21 +90,13 @@ class DeliveryBoyStatusBloc
     Emitter<DeliveryBoyStatusState> emit,
   ) async {
     if (_isCheckingApi) {
-
       return;
     }
 
     _isCheckingApi = true;
 
-
-
-
-
-
-
     try {
       await Global.refreshCachedToken();
-
 
       Map<String, dynamic> response;
 
@@ -100,7 +115,6 @@ class DeliveryBoyStatusBloc
           },
         );
       } catch (e) {
-
         // Fallback to status endpoint if profile fails
         response = await ApiBaseHelper.getApi(
           url: deliveryBoyStatusApi,
@@ -116,7 +130,6 @@ class DeliveryBoyStatusBloc
         );
       }
 
-
       if (response['success'] == true) {
         bool isOnline = false;
         bool isVerified = true;
@@ -130,18 +143,31 @@ class DeliveryBoyStatusBloc
               false;
         }
 
-        emit(DeliveryBoyStatusLoaded(isOnline: isOnline, isVerified: isVerified));
+        emit(
+          DeliveryBoyStatusLoaded(isOnline: isOnline, isVerified: isVerified),
+        );
 
         // Update local storage
         await Global.setDeliveryBoyStatus(isOnline);
 
         // Start/stop location services based on API status
+        // if (isOnline) {
+        //   _locationTracker.startTracking();
+        //   _periodicLocationService.startPeriodicUpdates();
+        // } else {
+        //   _locationTracker.stopTracking();
+        //   _periodicLocationService.stopPeriodicUpdates();
+        // }
+        String? driverId = await Global.getDriverId();
+
         if (isOnline) {
           _locationTracker.startTracking();
           _periodicLocationService.startPeriodicUpdates();
+          await _firebaseService.start(driverId!);
         } else {
           _locationTracker.stopTracking();
           _periodicLocationService.stopPeriodicUpdates();
+          _firebaseService.stop(driverId!);
         }
       } else {
         // Explicitly check for verification error
@@ -188,11 +214,7 @@ class DeliveryBoyStatusBloc
     ToggleStatus event,
     Emitter<DeliveryBoyStatusState> emit,
   ) async {
-
-
-
     if (_isProcessing) {
-
       return;
     }
 
@@ -225,7 +247,6 @@ class DeliveryBoyStatusBloc
     try {
       if (event.isOnline) {
         // Going online - simplified process
-
 
         double? latitude;
         double? longitude;
@@ -283,14 +304,22 @@ class DeliveryBoyStatusBloc
 
               if (deliveryBoy != null) {
                 // Try direct boy coords first
-                latitude = double.tryParse(deliveryBoy['latitude']?.toString() ?? '');
-                longitude = double.tryParse(deliveryBoy['longitude']?.toString() ?? '');
+                latitude = double.tryParse(
+                  deliveryBoy['latitude']?.toString() ?? '',
+                );
+                longitude = double.tryParse(
+                  deliveryBoy['longitude']?.toString() ?? '',
+                );
 
                 // Fallback to zone center if boy doesn't have fixed coords
                 if (latitude == null && deliveryBoy['delivery_zone'] != null) {
                   final zone = deliveryBoy['delivery_zone'];
-                  latitude = double.tryParse(zone['center_latitude']?.toString() ?? '');
-                  longitude = double.tryParse(zone['center_longitude']?.toString() ?? '');
+                  latitude = double.tryParse(
+                    zone['center_latitude']?.toString() ?? '',
+                  );
+                  longitude = double.tryParse(
+                    zone['center_longitude']?.toString() ?? '',
+                  );
                 }
               }
             }
@@ -328,8 +357,6 @@ class DeliveryBoyStatusBloc
           return;
         }
 
-
-
         final response = await _deliveryBoyStatusRepo.updateDeliveryBoyStatus(
           isOnline: true,
           latitude: latitude,
@@ -337,39 +364,37 @@ class DeliveryBoyStatusBloc
         );
 
         if (response['success'] == true) {
-
-
           // Start location services in background (don't wait for it)
           _startLocationServicesInBackground();
-
-          emit(
-            DeliveryBoyStatusLoaded(
-              isOnline: true,
-              message: response['message'] ?? 'Status updated successfully',
-            ),
-          );
+          if (response['success'] == true) {
+            emit(DeliveryBoyStatusLoaded(isOnline: true));
+          } else {
+            emit(DeliveryBoyStatusError(response['message']));
+          }
+          // emit(
+          //   DeliveryBoyStatusLoaded(
+          //     isOnline: true,
+          //     message: response['message'] ?? 'Status updated successfully',
+          //   ),
+          // );
           await Global.setDeliveryBoyStatus(true);
-
         } else {
-
           emit(
             DeliveryBoyStatusError(
               response['message'] ?? 'Failed to update status',
-              isOnline: false, // Transition failed, keep current or assume false if it was true? 
-                               // Actually we should keep state.isOnline
-                               // But if we were going online, and it failed, we stay offline.
-                               // Wait, ToggleStatus(true) means going online. If it fails, we stay state.isOnline (which should be false).
+              isOnline:
+                  false, // Transition failed, keep current or assume false if it was true?
+              // Actually we should keep state.isOnline
+              // But if we were going online, and it failed, we stay offline.
+              // Wait, ToggleStatus(true) means going online. If it fails, we stay state.isOnline (which should be false).
               // isOnline: state.isOnline,
             ),
           );
         }
       } else {
-
-
         await Global.refreshCachedToken();
 
         if (Global.userToken == null || Global.userToken!.isEmpty) {
-
           emit(
             DeliveryBoyStatusError(
               'Authentication token is missing. Please login again.',
@@ -380,16 +405,11 @@ class DeliveryBoyStatusBloc
           return;
         }
 
-
-
         final response = await _deliveryBoyStatusRepo.updateDeliveryBoyStatus(
           isOnline: false,
         );
 
-
-
         if (response['success'] == true) {
-
           // Stop location services in background (don't wait for it)
           _stopLocationServicesInBackground();
 
@@ -400,9 +420,7 @@ class DeliveryBoyStatusBloc
             ),
           );
           await Global.setDeliveryBoyStatus(false);
-
         } else {
-
           emit(
             DeliveryBoyStatusError(
               response['message'] ?? 'Failed to update status',
@@ -420,7 +438,6 @@ class DeliveryBoyStatusBloc
       );
     } finally {
       _isProcessing = false;
-
     }
   }
 
@@ -431,6 +448,15 @@ class DeliveryBoyStatusBloc
         _locationTracker.startTracking();
         _periodicLocationService.startPeriodicUpdates();
 
+        String? driverId = await Global.getDriverId();
+
+        if (driverId == null) {
+          debugPrint("❌ Driver ID is NULL");
+          return;
+        }
+        await _firebaseService.start(driverId);
+        // _locationTracker.startTracking();
+        // _periodicLocationService.startPeriodicUpdates();
       } catch (e) {
         //
       }
@@ -444,10 +470,18 @@ class DeliveryBoyStatusBloc
         _locationTracker.stopTracking();
         _periodicLocationService.stopPeriodicUpdates();
 
+        String? driverId = await Global.getDriverId();
+
+        if (driverId == null) {
+          debugPrint("❌ Driver ID is NULL");
+          return;
+        }
+        _firebaseService.stop(driverId);
+        // _locationTracker.stopTracking();
+        // _periodicLocationService.stopPeriodicUpdates();
       } catch (e) {
         //
       }
     });
   }
-
 }

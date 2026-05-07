@@ -37,6 +37,7 @@ class CustomCard extends StatelessWidget {
         final isDarkTheme = themeState.currentTheme == 'dark';
 
         final cardWidget = Container(
+        margin: const EdgeInsets.only(bottom: 10),
           width: width ?? double.infinity,
           height: height,
           padding: padding ?? EdgeInsets.all(15.h),
