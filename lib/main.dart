@@ -1,0 +1,272 @@
+// ignore_for_file: empty_catches, depend_on_referenced_packages
+
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hyper_local/router/app_routes.dart';
+import 'package:hyper_local/screens/auth/bloc/auth_bloc/auth_bloc.dart';
+import 'package:hyper_local/screens/auth/bloc/phone_auth_bloc/phone_auth_bloc.dart';
+import 'package:hyper_local/screens/auth/bloc/delivery_zone_bloc/delivery_zone_bloc.dart';
+import 'package:hyper_local/screens/delivery_zones/bloc/delivery_zone_bloc.dart'
+    as zones;
+import 'package:hyper_local/screens/dashboard/bloc/ratings/ratings_bloc.dart';
+import 'package:hyper_local/screens/dashboard/repo/ratings_repo.dart';
+import 'package:hyper_local/screens/feed_page/bloc/deliveryboy_status_update_bloc/deliveryboy_status_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/available_orders_bloc/available_orders_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/items_collected_bloc/items_collected_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/my_orders_bloc/my_orders_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/order_details_bloc/order_details_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/return_order/pickup_order_details_bloc/pickup_order_details_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/return_order/pickup_orders_list_bloc/pickup_order_list_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/return_order/return_orders_list_bloc/return_order_list_bloc.dart';
+import 'package:hyper_local/screens/feed_page/bloc/return_order/update_return_order_status_bloc/update_return_order_status_bloc.dart';
+import 'package:hyper_local/screens/feed_page/repo/order_details.dart';
+import 'package:hyper_local/screens/pockets/cash_collection/bloc/cash_collection_bloc.dart';
+import 'package:hyper_local/screens/pockets/cash_collection/bloc/cash_collection_event.dart';
+import 'package:hyper_local/screens/pockets/cash_collection/repo/cash_collection_repo.dart';
+import 'package:hyper_local/screens/pockets/earnings/bloc/earnings_bloc.dart';
+import 'package:hyper_local/screens/pockets/earnings/repo/earnings_repo.dart';
+import 'package:hyper_local/screens/pockets/withdrawal/bloc/withdrawal_bloc.dart';
+import 'package:hyper_local/screens/pockets/withdrawal/repo/withdrawal_repo.dart';
+import 'package:hyper_local/screens/settings/bloc/profile_bloc/profile_bloc.dart';
+import 'package:hyper_local/screens/settings/bloc/profile_bloc/profile_event.dart';
+import 'package:hyper_local/screens/settings/repo/profile_repo.dart';
+import 'package:hyper_local/screens/system_settings/bloc/system_settings_bloc.dart';
+import 'package:hyper_local/screens/system_settings/bloc/system_settings_event.dart';
+import 'package:hyper_local/screens/system_settings/repo/system_settings_repo.dart';
+import 'package:hyper_local/screens/inactive_delievryboy/bloc/inactive_page_stats/home_stats_bloc.dart';
+import 'package:hyper_local/screens/inactive_delievryboy/bloc/inactive_page_stats/home_stats_event.dart';
+import 'package:hyper_local/screens/inactive_delievryboy/repo/home_stats_repo.dart';
+import 'config/global.dart';
+import 'config/theme.dart';
+import 'config/theme_bloc.dart';
+import 'config/localization_service.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'utils/notification_manager.dart';
+import 'screens/dashboard/bloc/notification/notification_bloc.dart';
+import 'screens/dashboard/repo/notification_list_repo.dart';
+import 'package:hyper_local/services/translation/language_provider.dart';
+
+// Add these imports for Firebase
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Parallelize critical initializations
+  await Future.wait([
+    _initializeFirebaseAndNotifications(),
+    _initializeHiveAndGlobal(),
+    LocalizationService().initialize(),
+  ]);
+
+  // Non-critical services can start without blocking the first frame
+  _initializeBackgroundServices();
+
+  runApp(
+    ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => const MyApp(),
+    ),
+  );
+}
+
+Future<void> _initializeFirebaseAndNotifications() async {
+  try {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    }
+    await NotificationManager().initialize();
+  } catch (e) {
+    if (!e.toString().contains('duplicate-app')) {
+      debugPrint('Firebase/Notification initialization error: $e');
+    }
+  }
+}
+
+Future<void> _initializeHiveAndGlobal() async {
+  await Hive.initFlutter();
+  await Future.wait([
+    Hive.openBox('theme_box'),
+    Global.initializeToken(),
+    Global.initializeStatus(),
+  ]);
+}
+
+void _initializeBackgroundServices() {
+  // These are started without 'await' to not block the UI rendering
+  createNotificationChannel();
+  initializeService();
+  _restartServicesIfNeeded();
+}
+
+Future<void> createNotificationChannel() async {
+  const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'location_tracker_channel',
+    'Location Tracking',
+    description: 'Foreground service for delivery tracking',
+    importance: Importance.low,
+  );
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin
+      >()
+      ?.createNotificationChannel(channel);
+}
+
+Future<void> initializeService() async {
+  final service = FlutterBackgroundService();
+
+  await service.configure(
+    androidConfiguration: AndroidConfiguration(
+      onStart: onStart,
+      autoStart: false,
+      isForegroundMode: true,
+      notificationChannelId: 'location_tracker_channel',
+      initialNotificationTitle: 'Location Tracking',
+      initialNotificationContent: 'Tracking your location for deliveries',
+      foregroundServiceNotificationId: 888,
+    ),
+    iosConfiguration: IosConfiguration(
+      autoStart: false,
+      onForeground: onStart,
+      onBackground: onIosBackground,
+    ),
+  );
+}
+
+@pragma('vm:entry-point')
+void onStart(ServiceInstance service) async {
+  service.on('stopService').listen((event) {
+    service.stopSelf();
+  });
+}
+
+@pragma('vm:entry-point')
+Future<bool> onIosBackground(ServiceInstance service) async {
+  return true;
+}
+
+Future<void> _restartServicesIfNeeded() async {
+  try {
+    final wasOnline = await Global.getDeliveryBoyStatus();
+    if (wasOnline == true) {
+      // Restart services if needed
+    }
+  } catch (e) {
+    log('Error checking delivery status: $e');
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final profileRepo = ProfileRepo();
+    final withdrawRepo = WithdrawalRepo();
+    final earningsRepo = EarningsRepo();
+    final cashCollectionRepo = CashCollectionRepo();
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ThemeBloc()..add(LoadTheme())),
+        BlocProvider(create: (context) => AuthBloc()),
+        BlocProvider(create: (context) => PhoneAuthBloc()),
+        BlocProvider(create: (context) => DeliveryZoneBloc()),
+        BlocProvider(create: (context) => zones.DeliveryZoneBloc()),
+        BlocProvider(create: (context) => DeliveryBoyStatusBloc()),
+        BlocProvider(create: (context) => AvailableOrdersBloc()),
+        BlocProvider(create: (context) => MyOrdersBloc()),
+        BlocProvider(
+          create: (context) => ProfileBloc(profileRepo)..add(LoadProfile()),
+        ),
+        BlocProvider(create: (context) => ItemsCollectedBloc()),
+        BlocProvider(create: (context) => WithdrawalBloc(withdrawRepo)),
+        BlocProvider(create: (context) => ReturnOrderListBloc()),
+        BlocProvider(create: (context) => PickupOrderListBloc()),
+        BlocProvider(create: (context) => RatingsBloc(RatingsRepo())),
+        BlocProvider(create: (context) => PickupOrderDetailsBloc()),
+        BlocProvider(create: (context) => UpdateReturnOrderStatusBloc()),
+        BlocProvider(
+          create:
+              (context) =>
+                  SystemSettingsBloc(SystemSettingsRepo())
+                    ..add(FetchSystemSettings()),
+        ),
+        BlocProvider(
+          create:
+              (context) =>
+                  HomeStatsBloc(HomeStatsRepo())..add(FetchHomeStats()),
+        ),
+        BlocProvider(create: (context) => OrderDetailsBloc(OrderDetailsRepo())),
+        ChangeNotifierProvider(create: (context) => LocalizationService()),
+        ChangeNotifierProvider(create: (context) => LanguageProvider()),
+        BlocProvider(create: (context) => EarningsBloc(earningsRepo)),
+        BlocProvider(
+          create:
+              (context) =>
+                  CashCollectionBloc(cashCollectionRepo)
+                    ..add(FetchCashCollection()),
+        ),
+        BlocProvider(
+          create:
+              (context) =>
+                  NotificationBloc(NotificationListRepo())
+                    ..add(FetchNotifications()),
+        ),
+      ],
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          final isDark = state.currentTheme == 'dark';
+
+          if (state is ThemeInitial) {
+            return const MaterialApp(
+              home: Scaffold(body: Center(child: CircularProgressIndicator())),
+            );
+          }
+
+          return Consumer<LocalizationService>(
+            builder: (context, localizationService, child) {
+              return MaterialApp.router(
+                debugShowCheckedModeBanner: false,
+                theme: AppColor.getLightTheme(),
+                darkTheme: AppColor.getDarkTheme(),
+                themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+                locale: localizationService.currentLocale,
+                localizationsDelegates: [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: LocalizationService.supportedLocales,
+                builder: (context, child) {
+                  return FToastBuilder()(context, child!);
+                },
+                routerConfig: MyAppRoute.router,
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
